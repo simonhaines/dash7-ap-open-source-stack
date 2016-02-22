@@ -142,7 +142,7 @@ Ecode_t ezradioStartRx(uint8_t channel)
     return ECODE_OK;
 }
 
-Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_after)
+Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_after, uint8_t data_lenght)
 {
 	ezradio_cmd_reply_t ezradioReply;
 
@@ -163,20 +163,12 @@ Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_af
 	//Reset TX FIFO
 	ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_TX_BIT, NULL);
 
-	/* Fill the TX fifo with data, CRC is added by HW*/
-#ifdef HAL_RADIO_USE_HW_CRC
-	ezradio_write_tx_fifo(packet->length-1, packet->data);
-#else
-	ezradio_write_tx_fifo(packet->length+1, packet->data);
-#endif
+	ezradio_write_tx_fifo(data_lenght, packet->data);
+
 	/* Start sending packet*/
 	// RX state or idle state
 	uint8_t next_state = rx_after ? 8 << 4 : 1 << 4;
-#ifdef HAL_RADIO_USE_HW_CRC
-	ezradio_start_tx(channel_id, next_state,  packet->length-1);
-#else
-	ezradio_start_tx(channel_id, next_state,  packet->length+1);
-#endif
+	ezradio_start_tx(channel_id, next_state, data_lenght);
 
 	return ECODE_EMDRV_EZRADIODRV_OK;
 }

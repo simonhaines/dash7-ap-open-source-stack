@@ -70,6 +70,12 @@
     #define DEBUG_RX_END()
 #endif
 
+#ifdef HAL_RADIO_USE_HW_CRC
+static bool has_hardware_crc = true;
+#else
+static bool has_hardware_crc = false;
+#endif
+
 /** \brief The possible states the radio can be in
  */
 typedef enum
@@ -117,7 +123,13 @@ static void configure_channel(const channel_id_t* channel_id)
 
 	if((channel_id->channel_header_raw != current_channel_id.channel_header_raw))
 	{
-		assert(channel_id->channel_header.ch_coding == PHY_CODING_PN9); // TODO implement other codings
+		if (channel_id->channel_header.ch_coding == PHY_CODING_PN9)
+		{
+			// TODO use HW CRC
+		} else {
+			//TODO: switch off HW CRC
+			assert(false);
+		}
 		// TODO assert valid center freq index
 
 		memcpy(&current_channel_id, channel_id, sizeof(channel_id_t)); // cache new settings
@@ -509,7 +521,17 @@ error_t hw_radio_send_packet(hw_radio_packet_t* packet, tx_packet_callback_t tx_
 	if(current_state == HW_RADIO_STATE_TX)
 		return EBUSY;
 
-	assert(packet->length < 63); // long packets not yet supported
+	uint8_t data_lenght = packet->length - 1;
+
+	if (current_packet->tx_meta.tx_cfg.channel_id->channel_header.ch_coding == PHY_CODING_FEC_PN9)
+	{
+
+	} else {
+		if (!has_hardware_crc)
+			data_lenght += 2;
+	}
+
+	assert(data_lenght < 63); // long packets not yet supported
 
 	tx_packet_callback = tx_cb;
 
@@ -523,13 +545,12 @@ error_t hw_radio_send_packet(hw_radio_packet_t* packet, tx_packet_callback_t tx_
 	current_state = HW_RADIO_STATE_TX;
 	current_packet = packet;
 
+
+
+
 #ifdef FRAMEWORK_LOG_ENABLED // TODO more granular
 	log_print_stack_string(LOG_STACK_PHY, "Data to TX Fifo:");
-#ifdef HAL_RADIO_USE_HW_CRC
-	log_print_data(packet->data, packet->length - 1 );
-#else
-	log_print_data(packet->data, packet->length + 1 );
-#endif
+	log_print_data(packet->data, data_lenght);
 #endif
 
 	configure_channel((channel_id_t*)&(current_packet->tx_meta.tx_cfg.channel_id));
@@ -539,9 +560,8 @@ error_t hw_radio_send_packet(hw_radio_packet_t* packet, tx_packet_callback_t tx_
 	DEBUG_TX_START();
 	DEBUG_RX_END();
 
-	ezradioStartTx(packet, ez_channel_id, should_rx_after_tx_completed);
+	ezradioStartTx(packet, ez_channel_id, should_rx_after_tx_completed, data_lenght);
 	return SUCCESS;
-
 }
 
 int16_t hw_radio_get_rssi()
@@ -684,11 +704,11 @@ static void ezradio_int_callback()
 						packet->rx_meta.rssi = hw_radio_get_latched_rssi();
 						packet->rx_meta.lqi = 0;
 						memcpy(&(packet->rx_meta.rx_cfg.channel_id), &current_channel_id, sizeof(channel_id_t));
-#ifdef HAL_RADIO_USE_HW_CRC
-						packet->rx_meta.crc_status = HW_CRC_VALID;
-#else
-						packet->rx_meta.crc_status = HW_CRC_UNAVAILABLE;
-#endif
+						if (has_hardware_crc)
+							packet->rx_meta.crc_status = HW_CRC_VALID;
+						else
+							packet->rx_meta.crc_status = HW_CRC_UNAVAILABLE;
+
 						packet->rx_meta.timestamp = timer_get_counter_value();
 
 						ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_RX_BIT, NULL);
