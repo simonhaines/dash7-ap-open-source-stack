@@ -63,7 +63,7 @@ void packet_assemble(packet_t* packet)
     // TODO network protocol footer
 
     // add CRC - SW CRC when using FEC
-    if (!has_hardware_crc || packet->hw_radio_packet.rx_meta.rx_cfg.channel_id->channel_header.ch_coding == PHY_CODING_FEC_PN9)
+    if (!has_hardware_crc || packet->hw_radio_packet.rx_meta.rx_cfg.channel_id.channel_header.ch_coding == PHY_CODING_FEC_PN9)
     {
     	uint16_t crc = __builtin_bswap16(crc_calculate(packet->hw_radio_packet.data, packet->hw_radio_packet.length + 1 - 2));
     	memcpy(data_ptr, &crc, 2);
