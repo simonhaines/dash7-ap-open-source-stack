@@ -25,7 +25,8 @@
  * Currently implemented for 26 MHZ RF Xtal
  * TODO: SYNTH_LPFILTx is dependent on hardware define in platform
  *
- *
+ * TODO: PKT_RX_THRESHOLD -> IRQ when Rx fifo almost full
+ * TODO: PKT_TX_THRESHOLD
  */
 
 #include "debug.h"
@@ -550,10 +551,8 @@ error_t hw_radio_send_packet(hw_radio_packet_t* packet, tx_packet_callback_t tx_
 
 	if (packet->tx_meta.tx_cfg.channel_id.channel_header.ch_coding == PHY_CODING_FEC_PN9)
 	{
-		//assert(packet->length < 32);
-		uint8_t buffer[32];
-		memcpy(buffer, packet->data, packet->length);
-		packet->length = fec_encode(packet->data, buffer, packet->length);
+
+		data_lenght = packet->length;
 	} else {
 		if (!has_hardware_crc)
 			data_lenght += 2;
