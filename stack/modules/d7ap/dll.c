@@ -141,7 +141,10 @@ static void switch_state(dll_state_t next_state)
         DPRINT("Switched to DLL_STATE_IDLE");
         break;
     case DLL_STATE_SCAN_AUTOMATION:
-        assert(dll_state == DLL_STATE_FOREGROUND_SCAN || dll_state == DLL_STATE_IDLE || dll_state == DLL_STATE_TX_FOREGROUND_COMPLETED);
+        assert(dll_state == DLL_STATE_FOREGROUND_SCAN
+               || dll_state == DLL_STATE_IDLE
+               || dll_state == DLL_STATE_TX_FOREGROUND_COMPLETED
+               || dll_state == DLL_STATE_SCAN_AUTOMATION);
         dll_state = next_state;
         DPRINT("Switched to DLL_STATE_SCAN_AUTOMATION");
         break;
@@ -456,6 +459,15 @@ void dll_execute_scan_automation()
         // TODO wait until radio idle
         if(dll_state != DLL_STATE_IDLE)
             switch_state(DLL_STATE_IDLE);
+    }
+}
+
+void dll_notify_dll_conf_file_changed()
+{
+    // when doing scan automation restart this
+    if(dll_state == DLL_STATE_SCAN_AUTOMATION)
+    {
+        dll_execute_scan_automation();
     }
 }
 

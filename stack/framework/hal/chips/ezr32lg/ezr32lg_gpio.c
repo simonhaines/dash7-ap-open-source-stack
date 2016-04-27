@@ -34,6 +34,8 @@
 #include <ezr32lg_chip.h>
 #include "hwatomic.h"
 
+#include "em_gpio.h"
+
 typedef struct
 {
     gpio_inthandler_t callback;
@@ -57,7 +59,6 @@ __LINK_C void __gpio_init()
 
     /* Initialize GPIO interrupt dispatcher */
     GPIOINT_Init();
-
 }
 
 __LINK_C error_t hw_gpio_configure_pin(pin_id_t pin_id, bool int_allowed, uint8_t mode, unsigned int out)

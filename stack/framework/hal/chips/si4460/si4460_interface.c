@@ -110,7 +110,7 @@ void ezradioInit(task_t cb)
   if (cb != NULL)
   {
 	  int_callback = cb;
-	  sched_register_task(int_callback);
+	  //sched_register_task(int_callback);
   }
 }
 
@@ -163,20 +163,35 @@ Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_af
 	//Reset TX FIFO
 	ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_TX_BIT, NULL);
 
+	uint16_t packet_lenght = packet->length-1;
+	#ifndef HAL_RADIO_USE_HW_CRC
+	packet_lenght += 2;
+	#endif
+
+	uint16_t chunck_lenght = packet_lenght;
+	if (chunck_lenght > 64) chunck_lenght = 64;
+
 	/* Fill the TX fifo with data, CRC is added by HW*/
-#ifdef HAL_RADIO_USE_HW_CRC
-	ezradio_write_tx_fifo(packet->length-1, packet->data);
-#else
-	ezradio_write_tx_fifo(packet->length+1, packet->data);
-#endif
+	ezradio_write_tx_fifo(chunck_lenght, packet->data);
+
 	/* Start sending packet*/
 	// RX state or idle state
 	uint8_t next_state = rx_after ? 8 << 4 : 1 << 4;
-#ifdef HAL_RADIO_USE_HW_CRC
-	ezradio_start_tx(channel_id, next_state,  packet->length-1);
-#else
-	ezradio_start_tx(channel_id, next_state,  packet->length+1);
-#endif
+	ezradio_start_tx(channel_id, next_state,  packet_lenght);
+
+
+	while (chunck_lenght < packet_lenght)
+	{
+		ezradio_fifo_info(0, &ezradioReply);
+		DPRINT("TX FIFO Space: %d", ezradioReply.FIFO_INFO.TX_FIFO_SPACE);
+		uint16_t new_length = packet_lenght - chunck_lenght;
+		if (new_length > ezradioReply.FIFO_INFO.TX_FIFO_SPACE) new_length = ezradioReply.FIFO_INFO.TX_FIFO_SPACE;
+		ezradio_write_tx_fifo(new_length, &(packet->data[chunck_lenght]));
+		chunck_lenght += new_length;
+		DPRINT ("%d added -> %d", chunck_lenght, packet_lenght);
+	}
+
+
 
 	return ECODE_EMDRV_EZRADIODRV_OK;
 }
@@ -208,7 +223,8 @@ static void GPIO_EZRadio_INT_IRQHandler( uint8_t pin )
   ezradioIrqReceived = true;
 
   if (int_callback)
-	  sched_post_task(int_callback);
+	  //sched_post_task_prio(int_callback, MAX_PRIORITY);
+	  int_callback();
 
 
 
