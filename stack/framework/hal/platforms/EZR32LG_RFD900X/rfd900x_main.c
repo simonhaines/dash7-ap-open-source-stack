@@ -27,6 +27,7 @@
 #include "hwdebug.h"
 #include "hwwatchdog.h"
 #include "platform.h"
+#include "platform_uart.h"
 #include "em_gpio.h"
 #include <debug.h>
 
@@ -88,6 +89,7 @@ void __platform_init()
 	__ezr32lg_mcu_init();
     __gpio_init();
     __led_init();
+    __uart_init();
 
 
 

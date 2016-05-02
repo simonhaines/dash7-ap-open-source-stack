@@ -25,57 +25,68 @@
     #error Mismatch between the configured platform and the actual platform. Expected PLATFORM_EZR32LG_RFD900X to be defined
 #endif
 
-
 #include <ezr32lg_chip.h>
 
-#define HW_USE_HFXO
-#define HW_USE_LFXO
 
-/********************
+/**************************
+ * OSCILLATOR DEFINITIONS *
+ **************************/
+// The RFD900x doesn't have any on-board crystals
+#undef HW_USE_HFXO
+#undef HW_USE_LFXO
+
+
+/*******************
  * LED DEFINITIONS *
  *******************/
-
 // Red LED is GPIO F.11, green LED is GPIO F.10
-#define HW_NUM_LEDS 2
-#define LED0	    F10
-#define	LED1	    F11
+#define HW_NUM_LEDS  2
+#define LED0         F10
+#define	LED1         F11
+
+
+/***********************
+ * CONSOLE DEFINITIONS *
+ ***********************/
+#define NO_CONSOLE
+#undef  CONSOLE_UART
+
 
 /********************
  * UART DEFINITIONS *
- *******************/
-
-#define UART_BAUDRATE       PLATFORM_EZR32LG_RFD900X_UART_BAUDRATE
-
-// UART0 location #1: PE0 and PE1
-//#define UART_PIN_TX         E0           // PE0
-//#define UART_PIN_RX         E1          // PE1
+ ********************/
+// Use USART 1, location 2
+#define UART_NUM       2
+#define UART_LOCATION  2
+#define UART_BAUDRATE  PLATFORM_EZR32LG_RFD900X_UART_BAUDRATE
 
 
-/********************
+/**********************
  * SPI RF DEFINITIONS *
- *******************/
+ **********************/
+#define si4455_GDO0_PIN  A15
+#define si4455_GDO1_PIN  E14
+#define si4455_SDN_PIN   E8
 
-
-#define si4455_GDO0_PIN A15
-#define si4455_GDO1_PIN E14
-#define si4455_SDN_PIN  E8
 
 /*************************
  * DEBUG PIN DEFINITIONS *
- ************************/
-
-#define DEBUG_PIN_NUM 0
+ *************************/
+#define DEBUG_PIN_NUM  0
 /* Define DEBUG0, DEBUG1... */
+
 
 /**************************
  * USERBUTTON DEFINITIONS *
- *************************/
-
-#define NUM_USERBUTTONS 	0
+ **************************/
+#define NUM_USERBUTTONS  0
 /* Define BUTTON0, BUTTON1... */
 
 
+/*******************
+ * LCD DEFINITIONS *
+ *******************/
+#undef HAS_LCD
 
-#define HAS_LCD
 
 #endif
