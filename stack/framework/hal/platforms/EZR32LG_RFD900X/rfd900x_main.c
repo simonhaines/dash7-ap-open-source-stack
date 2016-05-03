@@ -89,7 +89,6 @@ void __platform_init()
 	__ezr32lg_mcu_init();
     __gpio_init();
     __led_init();
-    __uart_init();
 
 
 
@@ -111,6 +110,9 @@ void __platform_post_framework_init()
 #ifdef PLATFORM_USE_SWO
     SWO_SetupForPrint();
 #endif
+
+    // The UART registers tasks, so needs the framework in place
+    __uart_init();
 }
 
 int main()

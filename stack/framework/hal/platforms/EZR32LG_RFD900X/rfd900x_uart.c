@@ -35,12 +35,15 @@
 #define UART_QUEUE_SIZE		3
 
 // Buffers allocated for asynchronously receiving messages over the UART
-static uint8_t buffers[NUM_UART_BUFFERS][UART_BUFFER_SIZE + 1];
-static size_t current_buffer;
+static struct {
+	uint8_t data[UART_BUFFER_SIZE];
+	size_t length;
+} buffers[NUM_UART_BUFFERS];
+static size_t current_buffer = 0;
 
 // Callbacks for messages received over the UART
 static uart_callback_t callbacks[UART_QUEUE_SIZE];
-static size_t num_registered_callbacks;
+static size_t num_registered_callbacks = 0;
 
 static uart_handle_t *uart;
 static void uart_rx_inthandler(uint8_t byte);
@@ -48,10 +51,12 @@ static void uart_task(void);
 
 __LINK_C void __uart_init(void) {
 	num_registered_callbacks = 0;
+	sched_register_task(&uart_task);
 
 	uart = uart_init(UART_NUM, UART_BAUDRATE, UART_LOCATION);
 	uart_set_rx_interrupt_callback(uart, uart_rx_inthandler);
-	assert(uart_enable(uart));
+	bool result = uart_enable(uart);
+	assert(result);
 }
 
 __LINK_C error_t uart_register_callback(uart_callback_t callback)
@@ -113,6 +118,11 @@ __LINK_C error_t uart_deregister_callback(uart_callback_t callback)
 	return SUCCESS;
 }
 
+__LINK_C void  uart_send(uint8_t *buffer, size_t length)
+{
+	uart_send_bytes(uart, buffer, length);
+}
+
 static void uart_rx_inthandler(uint8_t byte) {
 	static enum {
 		SYNC = 0x7E,
@@ -138,14 +148,14 @@ static void uart_rx_inthandler(uint8_t byte) {
 			if (++current_buffer == NUM_UART_BUFFERS)
 				current_buffer = 0;
 			index = chkA = chkB = 0;
-			buffers[current_buffer][index++] = length;
+			buffers[current_buffer].length = length;
 			state = PAYLOAD;
 		}
 		else
 			state = FLUSH;
 		break;
 	case PAYLOAD:
-		buffers[current_buffer][index++] = byte;
+		buffers[current_buffer].data[index++] = byte;
 		chkA += byte;
 		chkB += chkA;
 		if (index == length)
@@ -174,21 +184,17 @@ static void uart_rx_inthandler(uint8_t byte) {
 
 static void uart_task()
 {
-	uint8_t *buffer = &buffers[current_buffer][1];
-	size_t length = buffers[current_buffer][0];
+	uint8_t *data = buffers[current_buffer].data;
+	size_t length = buffers[current_buffer].length;
 
 	for (int index = 0; index < UART_QUEUE_SIZE; ++index)
 	{
 		uart_callback_t callback = 0x0;
 		start_atomic();
-			if (callbacks[index] != 0x0)
-			{
-				callback = callbacks[index];
-				break;
-			}
+		callback = callbacks[index];
 		end_atomic();
 
 		if (callback != 0x0)
-			callback(buffer, length);
+			callback(data, length);
 	}
 }

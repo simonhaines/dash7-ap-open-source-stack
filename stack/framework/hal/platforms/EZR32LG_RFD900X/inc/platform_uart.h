@@ -34,7 +34,7 @@
  *
  * \param buffer	The buffer containing the received message
  * \param length	The length of the message
- * **/
+ */
 typedef void (*uart_callback_t)(uint8_t *buffer, size_t length);
 
 /* \brief Register a function to be called when an incoming message is received.
