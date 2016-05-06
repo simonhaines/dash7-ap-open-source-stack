@@ -54,7 +54,7 @@ static struct {
 static size_t current_buffer = 0;
 
 // Transmit buffers
-static uint8_t tx_buffer[2];
+static uint8_t tx_buffer[2][UART_BUFFER_SIZE];
 static size_t current_tx_buffer = 0;
 
 
@@ -197,11 +197,6 @@ __LINK_C error_t uart_register_callback(uart_callback_t callback)
 	start_atomic();
 		callbacks[empty_index] = callback;
 		num_registered_callbacks++;
-		if(num_registered_callbacks == 1)
-		{
-			// This is the first listener to register, enable the UART interrupt
-			uart_rx_interrupt_enable(uart);
-		}
 	end_atomic();
 	return SUCCESS;
 }
@@ -227,11 +222,6 @@ __LINK_C error_t uart_deregister_callback(uart_callback_t callback)
 	start_atomic();
 		callbacks[callback_index] = 0x0;
 		num_registered_callbacks--;
-		if(num_registered_callbacks == 0)
-		{
-			// This is the last listener to deregister, disable the UART interrupt
-			uart_rx_interrupt_disable(uart);
-		}
 	end_atomic();
 	return SUCCESS;
 }
@@ -241,13 +231,13 @@ __LINK_C void  uart_send(uint8_t *buffer, size_t length)
 	if (length < UART_BUFFER_SIZE && length > 0)
 	{
 		start_atomic();
-			uint8_t *tx_buffer = tx_buffer[current_tx_buffer];
+			uint8_t *buf = tx_buffer[current_tx_buffer];
 			current_tx_buffer ^= 1;
 		end_atomic();
-		memcpy(tx_buffer, buffer, length);
+		memcpy(buf, buffer, length);
 
 		while (DMA_ChannelEnabled(DMA_CHANNEL_TX)) /* Wait for Tx channel */;
-		DMA_ActivateBasic(DMA_CHANNEL_TX, true, false, (void *)&(USART1->TXDATA), buffer, length - 1);
+		DMA_ActivateBasic(DMA_CHANNEL_TX, true, false, (void *)&(USART1->TXDATA), buf, length - 1);
 	}
 }
 
