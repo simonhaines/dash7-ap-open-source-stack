@@ -70,7 +70,7 @@ ADD_LIBRARY(PLATFORM OBJECT
     rfd900x_main.c
 	rfd900x_leds.c
 	rfd900x_debug.c
-	rfd900x_uart.c
+	rfd900x_uart-dma.c
     libc_overrides.c
 )
 
