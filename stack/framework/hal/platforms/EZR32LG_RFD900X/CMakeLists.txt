@@ -43,8 +43,10 @@ EXPORT_GLOBAL_INCLUDE_DIRECTORIES(inc)
 ##testing...
 EXPORT_GLOBAL_INCLUDE_DIRECTORIES(config)
 
-INCLUDE_DIRECTORIES(inc
+INCLUDE_DIRECTORIES(./
+			inc
 		    Drivers
+		    ../../chips/si4460/ezradiodrv
 		    )
 
 #Make the 'binary platform dir' available so the 'platform_defs.h' file
@@ -71,6 +73,8 @@ ADD_LIBRARY(PLATFORM OBJECT
 	rfd900x_leds.c
 	rfd900x_debug.c
 	rfd900x_uart-dma.c
+	rfd900x_si4460.c
+	rfd900x_si4460_interface.c
     libc_overrides.c
 )
 
