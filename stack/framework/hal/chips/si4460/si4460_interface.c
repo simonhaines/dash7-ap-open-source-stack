@@ -121,28 +121,47 @@ void ezradioResetTRxFifo(void)
 }
 
 
-Ecode_t ezradioStartRx(uint8_t channel)
+Ecode_t ezradioStartRx(uint8_t channel, bool packet_handler)
 {
 	ezradio_get_int_status(0u, 0u, 0u, NULL);
 
+	ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_RX_BIT, NULL);
+
 	// reset length of first field (can be corrupted by TX)
 	ezradio_set_property(0x12, 0x02, 0x0D, 0x00, 0x01);
+	if (packet_handler)
+	{
+		// packet handler mode: end of packet and CRC
+		ezradio_set_property(0x12, 0x01, 0x06, 0x02);
+		ezradio_start_rx(channel, 0u, 0u,
+				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
+				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
+				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_READY,
+				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX,
+				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_READY);
+	} else {
+		// Direct RX mode - used in FEC: no end of packet, no CRC
+		ezradio_set_property(0x12, 0x01, 0x06, 0x2);
+
+		ezradio_start_rx(channel, 0u, 0xFF,
+				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
+				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
+				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_READY,
+				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX,
+				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_READY);
+	}
 
   /* Start Receiving packet, channel 0, START immediately, Packet n bytes long */
 	//timeout: nochange
 	//valid: go to ready state, if rx -> latched rssi can be overwritten or reset
 	//invalid: = CRC error, ready state handled here or upper layer?
-    ezradio_start_rx(channel, 0u, 0u,
-                  EZRADIO_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
-                  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
-                  EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_READY,
-                  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX,
-                  EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_READY);
+    //ezradio_start_rx(channel, 0u, 0u,
+
 
     return ECODE_OK;
 }
 
-Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_after)
+Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_after, uint8_t data_lenght)
 {
 	ezradio_cmd_reply_t ezradioReply;
 
@@ -163,12 +182,7 @@ Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_af
 	//Reset TX FIFO
 	ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_TX_BIT, NULL);
 
-	uint16_t packet_lenght = packet->length-1;
-	#ifndef HAL_RADIO_USE_HW_CRC
-	packet_lenght += 2;
-	#endif
-
-	uint16_t chunck_lenght = packet_lenght;
+	uint16_t chunck_lenght = data_lenght;
 	if (chunck_lenght > 64) chunck_lenght = 64;
 
 	/* Fill the TX fifo with data, CRC is added by HW*/
@@ -177,21 +191,19 @@ Ecode_t ezradioStartTx(hw_radio_packet_t* packet, uint8_t channel_id, bool rx_af
 	/* Start sending packet*/
 	// RX state or idle state
 	uint8_t next_state = rx_after ? 8 << 4 : 1 << 4;
-	ezradio_start_tx(channel_id, next_state,  packet_lenght);
+	ezradio_start_tx(channel_id, next_state,  data_lenght);
 
 
-	while (chunck_lenght < packet_lenght)
+	while (chunck_lenght < data_lenght)
 	{
 		ezradio_fifo_info(0, &ezradioReply);
 		DPRINT("TX FIFO Space: %d", ezradioReply.FIFO_INFO.TX_FIFO_SPACE);
-		uint16_t new_length = packet_lenght - chunck_lenght;
+		uint16_t new_length = data_lenght - chunck_lenght;
 		if (new_length > ezradioReply.FIFO_INFO.TX_FIFO_SPACE) new_length = ezradioReply.FIFO_INFO.TX_FIFO_SPACE;
 		ezradio_write_tx_fifo(new_length, &(packet->data[chunck_lenght]));
 		chunck_lenght += new_length;
-		DPRINT ("%d added -> %d", chunck_lenght, packet_lenght);
+		DPRINT ("%d added -> %d", chunck_lenght, data_lenght);
 	}
-
-
 
 	return ECODE_EMDRV_EZRADIODRV_OK;
 }
