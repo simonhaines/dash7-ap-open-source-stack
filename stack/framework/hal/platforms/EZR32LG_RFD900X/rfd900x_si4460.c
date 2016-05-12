@@ -38,8 +38,12 @@
 #include "hwdebug.h"
 #include "types.h"
 
+
+#include "si4460_registers.h"
+
+
+
 #include "rfd900x_si4460_interface.h"
-//#include "rfd900x_si4460_registers.h"
 #include "ezradio_cmd.h"
 #include "ezradio_api_lib.h"
 

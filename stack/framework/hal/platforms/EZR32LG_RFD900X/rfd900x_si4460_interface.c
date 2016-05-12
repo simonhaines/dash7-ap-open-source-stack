@@ -24,8 +24,10 @@
 #include <stdint.h>
 
 
+#include "si4460_configuration.h"
+
+
 #include "rfd900x_si4460_interface.h"
-//#include "si4460_configuration.h"
 #include "ezradio_api_lib.h"
 #include "ezradio_hal.h"
 #include "ezradio_api_lib_add.h"

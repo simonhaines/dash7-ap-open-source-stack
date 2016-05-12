@@ -34,12 +34,6 @@
 #include "em_cmu.h"
 #include "em_chip.h"
 
-
-#include "console.h"
-
-
-#include "bsp_trace.h"
-
 void SWO_SetupForPrint(void)
 {
   /* Enable GPIO clock. */

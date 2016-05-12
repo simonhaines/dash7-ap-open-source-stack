@@ -25,14 +25,12 @@ REQUIRE_TOOLCHAIN(gcc-arm-embedded)
 #Define platform specific options
 PLATFORM_PARAM(${PLATFORM_PREFIX}_MCU "EZR32LG330F128R68" STRING "The MCU of the RFD900X board")
 SET(JLINK_DEVICE ${${PLATFORM_PREFIX}_MCU} CACHE STRING "The device passed to JLinkExe for flashing")
-#PLATFORM_PARAM(${PLATFORM_PREFIX}_RADIO "si4460" STRING "The radio chip connected to the Gecko board")
 PLATFORM_OPTION(${PLATFORM_PREFIX}_DEBUGPINS "Enable/Disable Hardware Debug Pins support (see 'hwdebug.h')" FALSE)
 PLATFORM_OPTION(PLATFORM_USE_SWO "Enable/Disable SWO Uart output" FALSE)
-#Restrict the number of possible options for the radio option in the usual manner...
-SET_PROPERTY(CACHE ${PLATFORM_PREFIX}_RADIO PROPERTY STRINGS "si4460")
 
 # UART
 PLATFORM_PARAM(${PLATFORM_PREFIX}_UART_BAUDRATE "115200" STRING "The baudrate used by the device.")
+SET_PROPERTY(CACHE ${PLATFORM_PREFIX}_UART_BAUDRATE PROPERTY STRINGS "57600" "115200" "230400")
 
 #Add a 'global' definition for the specific MCU
 EXPORT_GLOBAL_COMPILE_DEFINITIONS("-D${${PLATFORM_PREFIX}_MCU}")
@@ -45,8 +43,8 @@ EXPORT_GLOBAL_INCLUDE_DIRECTORIES(config)
 
 INCLUDE_DIRECTORIES(./
 			inc
-		    Drivers
-		    ../../chips/si4460/ezradiodrv
+			drivers/ezradio/inc
+			drivers/kit
 		    )
 
 #Make the 'binary platform dir' available so the 'platform_defs.h' file
@@ -76,6 +74,11 @@ ADD_LIBRARY(PLATFORM OBJECT
 	rfd900x_si4460.c
 	rfd900x_si4460_interface.c
     libc_overrides.c
+    drivers/ezradio/src/ezradio_api_lib.c
+    drivers/ezradio/src/ezradio_api_lib_add.c
+    drivers/ezradio/src/ezradio_comm.c
+    drivers/ezradio/src/ezradio_hal.c
+    drivers/kit/dmactrl.c
 )
 
 #Include the sources for the EZR32LG330 chip

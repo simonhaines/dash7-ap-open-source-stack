@@ -24,6 +24,7 @@
  */
 
 
+#include <string.h>
 #include <debug.h>
 #include "types.h"
 #include "scheduler.h"
