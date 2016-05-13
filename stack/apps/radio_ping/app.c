@@ -43,8 +43,8 @@ packet_struct_t NGDEF(tx_buffer);
 
 static hw_rx_cfg_t rx_cfg = {
     .channel_id = {
-        .channel_header.ch_class = PHY_CLASS_NORMAL_RATE,
-        .channel_header.ch_freq_band = PHY_BAND_868,
+        .channel_header.ch_class = PHY_CLASS_HI_RATE,
+        .channel_header.ch_freq_band = PHY_BAND_915,
         .center_freq_index = 0
     },
     .syncword_class = PHY_SYNCWORD_CLASS0

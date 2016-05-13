@@ -19,7 +19,7 @@
 /*
  *
  *  Authors:
- * 		simon@rallysafe.com.au
+ * 		maarten.weyn@uantwerpen.be
  */
 
 #ifndef RFD900X_SI4455_INTERFACE_H

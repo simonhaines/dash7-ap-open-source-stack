@@ -89,4 +89,22 @@
 #undef HAS_LCD
 
 
+/*******************
+ * PWM DEFINITIONS *
+ *******************/
+#define PWM_TIMER     TIMER3
+#define PWM_CLOCK     cmuClock_TIMER3
+#define PWM_PORT      gpioPortE
+#define PWM_PIN       2
+#define PWM_CCX       2
+#define PWM_LOCATION  1
+
+
+/*************************
+ * AMPLIFIER DEFINITIONS *
+ *************************/
+#define AMP_PA   F3
+#define AMP_LNA  F7
+
+
 #endif

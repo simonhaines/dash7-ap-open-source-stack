@@ -17,14 +17,14 @@
  */
 
 // *************************************************************************************************
-// Radio core access functions. Taken from TI reference code for CC430.
+// Radio core access functions. Taken from ezradio_plugin_manager, ezradio_transmit_plugin, ezradio_receive_plugin
 // *************************************************************************************************
 
 #include <stdbool.h>
 #include <stdint.h>
 
 
-#include "si4460_configuration.h"
+#include "915_HR.h"
 
 
 #include "rfd900x_si4460_interface.h"
@@ -81,11 +81,8 @@ void ezradioInit(task_t cb)
 {
   uint16_t wDelay;
 
-  //(void)handle;
-
   /* Initialize radio GPIOs and SPI port */
   ezradio_hal_GpioInit( GPIO_EZRadio_INT_IRQHandler, true );
-  //ezradio_hal_GpioInit( GPIO_EZRadio_INT_IRQHandler, false );
   ezradio_hal_SpiInit();
 
   /* Power Up the radio chip */
@@ -110,16 +107,15 @@ void ezradioInit(task_t cb)
   ezradio_get_int_status(0u, 0u, 0u, NULL);
 
   if (cb != NULL)
-  {
 	  int_callback = cb;
-	  //sched_register_task(int_callback);
-  }
 }
 
 void ezradioResetTRxFifo(void)
 {
-	ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_RX_BIT, NULL);
-	ezradio_fifo_info(EZRADIO_CMD_FIFO_INFO_ARG_FIFO_TX_BIT, NULL);
+	uint8_t fifo=0;
+	fifo = EZRADIO_CMD_FIFO_INFO_ARG_FIFO_RX_BIT|
+			EZRADIO_CMD_FIFO_INFO_ARG_FIFO_TX_BIT;
+	ezradio_fifo_info_fast_reset(fifo);
 }
 
 
@@ -137,28 +133,16 @@ Ecode_t ezradioStartRx(uint8_t channel, bool packet_handler)
 		ezradio_set_property(0x12, 0x01, 0x06, 0x02);
 		ezradio_start_rx(channel, 0u, 0u,
 				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
-				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
 				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_READY,
-				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX,
 				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_READY);
 	} else {
 		// Direct RX mode - used in FEC: no end of packet, no CRC
 		ezradio_set_property(0x12, 0x01, 0x06, 0x2);
-
 		ezradio_start_rx(channel, 0u, 0xFF,
 				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
-				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
 				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_READY,
-				  //EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX,
 				  EZRADIO_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_READY);
 	}
-
-  /* Start Receiving packet, channel 0, START immediately, Packet n bytes long */
-	//timeout: nochange
-	//valid: go to ready state, if rx -> latched rssi can be overwritten or reset
-	//invalid: = CRC error, ready state handled here or upper layer?
-    //ezradio_start_rx(channel, 0u, 0u,
-
 
     return ECODE_OK;
 }
@@ -237,37 +221,5 @@ static void GPIO_EZRadio_INT_IRQHandler( uint8_t pin )
   ezradioIrqReceived = true;
 
   if (int_callback)
-	  //sched_post_task_prio(int_callback, MAX_PRIORITY);
 	  int_callback();
-
-
-
-//  #ifdef FRAMEWORK_LOG_ENABLED // TODO more granular
-//  	DPRINT("EZRadio_INT Pin: %d", pin);
-//  #endif
-//
-//  uint8_t nirq = ezradio_hal_NirqLevel();
-//
-//  ezradio_cmd_reply_t ezradioReply;
-//  ezradio_frr_a_read(4, &ezradioReply);
-//
-//  //
-//  //ezradio_get_chip_status(0, &ezradioReply);
-//
-//  if (int_callback)
-//  {
-//	  ezradio_cmd_reply_t ezradioReply;
-//	  ezradio_get_chip_status(0, &ezradioReply);
-//
-//	  int_callback();
-////	  ezradio_cmd_reply_t radioReplyData;
-////	  /* Read ITs, clear all pending ones */
-////	  ezradio_get_int_status(0x0, 0x0, 0x0, &radioReplyData);
-//
-////#ifdef FRAMEWORK_LOG_ENABLED // TODO more granular
-////	log_print_stack_string(LOG_STACK_PHY, "EZRadio INT");
-////	log_print_data(radioReplyData.RAW, 16);
-////#endif
-//
-//  }
 }

@@ -36,9 +36,11 @@
 #include "hwradio.h"
 #include "hwsystem.h"
 #include "hwdebug.h"
+#include "hwgpio.h"
 #include "types.h"
 
 
+// NOTE not really needed, here to get configure_channel() to compile
 #include "si4460_registers.h"
 
 
@@ -49,6 +51,10 @@
 
 #include "ezradio_hal.h"
 #include "fec.h"
+
+
+// Not defined in ezr32lg_pins.h
+extern pin_id_t const F3;
 
 
 #if defined(FRAMEWORK_LOG_ENABLED) && defined(FRAMEWORK_PHY_LOG_ENABLED) // TODO more granular (LOG_PHY_ENABLED)
@@ -213,7 +219,6 @@ static void configure_channel(const channel_id_t* channel_id)
 			//assert(false);
 			break;
 		default:
-			assert(false);
 			break;
 		}
 
@@ -349,10 +354,9 @@ static void configure_channel(const channel_id_t* channel_id)
 			DPRINT("Set channel freq index: %d", channel_id->center_freq_index);
 			break;
 		case PHY_BAND_915:
-			assert(false);
-
+			ez_channel_id = channel_id->center_freq_index / 8;
+			// Assume all other properties set in rfd900x_si4460_interface/ezradioInit()
 			break;
-
 		}
 	} else 	if (channel_id->center_freq_index != current_channel_id.center_freq_index)
 	{
@@ -397,9 +401,9 @@ static void configure_channel(const channel_id_t* channel_id)
 			DPRINT("Set channel freq index: %d", channel_id->center_freq_index);
 			break;
 		case PHY_BAND_915:
-			assert(false);
+			ez_channel_id = channel_id->center_freq_index / 8;
+			// Assume all other properties set in rfd900x_si4460_interface/ezradioInit()
 			break;
-
 		}
 
 		current_channel_id.center_freq_index = channel_id->center_freq_index;
@@ -597,6 +601,10 @@ error_t hw_radio_send_packet(hw_radio_packet_t* packet, tx_packet_callback_t tx_
 	DEBUG_TX_START();
 	DEBUG_RX_END();
 
+    // Set the power and low-noise amplifiers
+    hw_gpio_set(AMP_PA);
+    hw_gpio_set(AMP_LNA);
+
 	ezradioStartTx(packet, ez_channel_id, should_rx_after_tx_completed, data_length);
 	return SUCCESS;
 }
@@ -667,6 +675,10 @@ static void start_rx(hw_rx_cfg_t const* rx_cfg)
 
     configure_channel(&(rx_cfg->channel_id));
     configure_syncword_class(rx_cfg->syncword_class, rx_cfg->channel_id.channel_header.ch_coding);
+
+    // Clear the power and low-noise amplifiers
+    hw_gpio_clr(AMP_PA);
+    hw_gpio_clr(AMP_LNA);
 
     rx_fifo_data_lenght = 0;
     if (rx_cfg->channel_id.channel_header.ch_coding == PHY_CODING_FEC_PN9)
