@@ -19,7 +19,7 @@
 __LINK_C void pwm_set_duty(uint8_t duty);
 
 /* Not a user function */
-__LINK_C void __pwm_init(void);
+__LINK_C void __rfd900x_pwm_init(void);
 
 
 #endif /* RFD900X_PWM_H_ */

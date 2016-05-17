@@ -103,8 +103,9 @@
 /*************************
  * AMPLIFIER DEFINITIONS *
  *************************/
-#define AMP_PA   F3
-#define AMP_LNA  F7
+#define HW_NUM_AMPS  2
+#define AMP_PA       F3
+#define AMP_LNA      F7
 
 
 #endif

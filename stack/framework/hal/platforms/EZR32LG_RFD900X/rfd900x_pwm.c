@@ -46,7 +46,7 @@
 #error "PWM location must be defined"
 #endif
 
-void __pwm_init(void)
+void __rfd900x_pwm_init(void)
 {
 	CMU_ClockEnable(PWM_CLOCK, true);
 	GPIO_PinModeSet(PWM_PORT, PWM_PIN, gpioModePushPull, 0);

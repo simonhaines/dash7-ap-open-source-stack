@@ -72,8 +72,9 @@ ADD_LIBRARY(PLATFORM OBJECT
 	rfd900x_debug.c
 	rfd900x_uart-dma.c
 	rfd900x_pwm.c
+	rfd900x_mcu.c
+	rfd900x_amp.c
 	rfd900x_si4460.c
-	rfd900x_si4460_interface.c
     libc_overrides.c
     drivers/ezradio/src/ezradio_api_lib.c
     drivers/ezradio/src/ezradio_api_lib_add.c

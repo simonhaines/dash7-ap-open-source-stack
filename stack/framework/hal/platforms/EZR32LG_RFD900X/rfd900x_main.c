@@ -28,13 +28,16 @@
 #include "hwwatchdog.h"
 #include "platform.h"
 #include "platform_uart.h"
-#include "rfd900x_pwm.h"
 #include "em_gpio.h"
 #include <debug.h>
 
 #include "em_cmu.h"
 #include "em_chip.h"
 
+#include "rfd900x_mcu.h"
+#include "rfd900x_amp.h"
+#include "rfd900x_pwm.h"
+#include "rfd900x_si4460.h"
 
 // Not defined in ezr32lg_pins.h
 extern pin_id_t const F3;
@@ -86,19 +89,15 @@ void SWO_SetupForPrint(void)
 
 void __platform_init()
 {
-	__ezr32lg_mcu_init();
-    __gpio_init();
-    __led_init();
-    __pwm_init();
+	__rfd900x_mcu_init();     // Set clocking
+    __gpio_init();            // Start GPIO clock and enable interrupt
+    __led_init();             // Configure LEDs
+    __rfd900x_pwm_init();     // Start PWM clock and drive to pin
+    __rfd900x_amp_init();     // Configure low-noise and power amplifiers
+    __rfd900x_si4460_init();  // Initialise the transceiver
 
-
-    // Configure the power amplifier and low-noise amplifier pins
-    hw_gpio_configure_pin(AMP_PA, false, gpioModePushPull, 0);
-    hw_gpio_configure_pin(AMP_LNA, false, gpioModePushPull, 1);
-
-    __hw_debug_init();
-
-    __watchdog_init(); // TODO configure from cmake?
+    __hw_debug_init();        // Don't use any debug pins for now
+    __watchdog_init();        // Wake up the dog
 }
 
 void __platform_post_framework_init()

@@ -30,7 +30,7 @@
 #include <debug.h>
 
 #if HW_NUM_LEDS != 2
-	#error HW_NUM_LEDS does not match the expected value. Update platform.h or platform_leds.c
+	#error HW_NUM_LEDS does not match the expected value. Update platform.h or rfd900x_leds.c
 #endif
 static pin_id_t leds[ HW_NUM_LEDS ];
 
@@ -40,6 +40,7 @@ void __led_init()
 	leds[1] = LED1;
 	for(int i = 0; i < HW_NUM_LEDS; i++)
 	{
+		// Note: using push/pull mode, not push/pull/drive for the LEDs
 		error_t err = hw_gpio_configure_pin(leds[i], false, gpioModePushPull, 0);
 		assert(err == SUCCESS);
 	}
