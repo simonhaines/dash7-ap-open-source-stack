@@ -484,6 +484,10 @@ void USART_BaudrateSyncSet(USART_TypeDef *usart, uint32_t refFreq, uint32_t baud
    * CLKDIV in synchronous mode is given by:
    *
    * CLKDIV = 256 * (fHFPERCLK/(2 * br) - 1)
+   * yay great, but fucks up every micro this is designed for!!!!
+   * max micro speed is 48M for these, use 64*fclk and it will never overflow
+   * CLKDIV = (128 * fHFPERCLK)/br - 256
+   * CLKDIV/2 = (64 * fHFPERCLK)/br - 128
    */
 
   /* HFPERCLK used to clock all USART/UART peripheral modules */
@@ -501,11 +505,11 @@ void USART_BaudrateSyncSet(USART_TypeDef *usart, uint32_t refFreq, uint32_t baud
   clkdiv &= ~0xFF;
 #else
   /* Calculate and set CLKDIV with fractional bits */
-  clkdiv  = 2 * refFreq;
+  clkdiv  = 64 * refFreq;
   clkdiv += baudrate - 1;
   clkdiv /= baudrate;
-  clkdiv -= 4;
-  clkdiv *= 64;
+  clkdiv -= 128;
+  clkdiv *= 2;
   /* Make sure we don't use fractional bits by rounding CLKDIV */
   /* up (and thus reducing baudrate, not increasing baudrate above */
   /* specified value). */

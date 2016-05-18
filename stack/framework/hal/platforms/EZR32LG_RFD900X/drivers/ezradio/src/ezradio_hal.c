@@ -75,7 +75,7 @@ void ezradio_hal_GpioInit( GPIOINT_IrqCallbackPtr_t ezradioIrqCallback, bool ena
 
    /* EZR32HG family uses hard wired PTI interface from the radio to the board controler */
 #if !(defined _EZR32_HAPPY_FAMILY)
-   if (enablePTI)
+   if (enablePTI)// need this for diversity too
    {
      /* Setup PRS for PTI pins */
      CMU_ClockEnable(cmuClock_PRS, true);
@@ -118,7 +118,7 @@ void ezradio_hal_GpioInit( GPIOINT_IrqCallbackPtr_t ezradioIrqCallback, bool ena
 void ezradio_hal_SpiInit( void )
 {
 
-   ezradioSpiInitData.bitRate   = 8E6;
+   ezradioSpiInitData.bitRate   = 10E6;
    ezradioSpiInitData.csControl = spidrvCsControlApplication;
 
    SPIDRV_Init( ezradioSpiHandlePtr, &ezradioSpiInitData );
