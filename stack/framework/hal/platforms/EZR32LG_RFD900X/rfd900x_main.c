@@ -94,7 +94,6 @@ void __platform_init()
     __led_init();             // Configure LEDs
     __rfd900x_pwm_init();     // Start PWM clock and drive to pin
     __rfd900x_amp_init();     // Configure low-noise and power amplifiers
-    __rfd900x_si4460_init();  // Initialise the transceiver
 
     __hw_debug_init();        // Don't use any debug pins for now
     __watchdog_init();        // Wake up the dog

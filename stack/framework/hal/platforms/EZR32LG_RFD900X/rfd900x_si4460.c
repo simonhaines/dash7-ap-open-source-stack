@@ -849,6 +849,9 @@ error_t hw_radio_init(alloc_packet_callback_t alloc_packet_cb,
 	// disable jump detection (todo: optimize)
 	//ezradio_set_property(RADIO_CONFIG_SET_PROPERTY_MODEM_RSSI_CONTROL2);
 
+	// Perform extra initialisation of radio
+    __rfd900x_si4460_init();
+
 	/* Reset radio fifos. */
 	DPRINT("INIT ezradioResetTRxFifo");
 	ezradioResetTRxFifo();
