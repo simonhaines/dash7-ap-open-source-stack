@@ -129,7 +129,7 @@ static channel_id_t current_channel_id = {
 static uint8_t ez_channel_id = 0;
 static hw_radio_packet_t* rx_packet;
 
-static eirp_t current_eirp = 0;
+static eirp_t current_eirp = 20;
 
 static bool should_rx_after_tx_completed = false;
 static uint16_t tx_fifo_data_length = 0;
@@ -628,12 +628,15 @@ static void configure_eirp(const eirp_t eirp)
 {
 	if (eirp == current_eirp)
 		return;
-
+	eirp_t  pow = eirp;
 
 	DPRINT("configure_eirp not implemented using max");
-	uint8_t ddac = 0x7F; // max
-	ezradio_set_property(0x22, 0x01, 0x01, ddac);
-	current_eirp = eirp;
+	if(pow < 0){pow=0;}                                                           // min 0
+	else if(pow > 30){pow=30;}                                                     // max 30
+	radio_set_transmit_power(pow);                                                // set tx power
+	//uint8_t ddac = 0x7F; // max
+	//ezradio_set_property(0x22, 0x01, 0x01, ddac);
+	current_eirp = pow;
 }
 
 static void configure_syncword_class(syncword_class_t syncword_class, phy_coding_t coding)
@@ -695,7 +698,7 @@ error_t hw_radio_init(alloc_packet_callback_t alloc_packet_cb,
 	ezradioInit(&ezradio_int_callback);
 
 	/* Set Tx power */
-	radio_set_transmit_power(20);
+	radio_set_transmit_power(current_eirp);
 
 	/* Print EZRadio device number. */
 	DPRINT("INIT ezradio_part_info");
