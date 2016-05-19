@@ -144,155 +144,13 @@ static void ezradio_int_callback();
 static void report_rssi();
 
 
-// Definitions from TDM.c and radio_old.c
+// RFD900x power levels
 #define RFD900_INT_TX_POW 26           // TX power level into amp (0-127)not linear, 10dbm out, 6.8 after atten
 #define NUM_POWER_LEVELS 16
 #define POWER_LEVEL_STEP 2
-
-typedef union{
-	uint8_t b[4];
-	uint16_t w[2];
-	uint32_t L;
-} longin_t;
 static const uint8_t power_levels[NUM_POWER_LEVELS] = { 235, 230, 224, 218, 211, 206, 201, 196, 190, 184, 178, 171, 164, 150, 136, 80 };
-static const uint32_t FCODIV[8] = { 4, 6, 8, 12, 16, 24, 24, 24 };
-static const uint32_t NPRESC[2] = { 4, 2 };
-static uint8_t tx_channel;  // From EZRADIODRV_HandleData
-static uint8_t rx_channel;  // From EZRADIODRV_HandleData
-static bool radio_set_frequency(uint32_t freq);
-static bool radio_set_channel_spacing(uint32_t spacing);
-static void radio_set_channel(uint8_t channel, bool Update);
 static void radio_set_transmit_power(uint8_t power);
 static uint8_t calibration_get(uint8_t level);
-
-void __rfd900x_si4460_init(void) {
-
-	// These values are taken from TDM.c as a default configuration
-	uint32_t freq_min = 915000000;
-	uint32_t freq_max = 928000000;
-	uint16_t tx_power = 20;
-	uint8_t num_fh_channels = 50;
-	int16_t duty_cycle = 100;
-	uint16_t lbt_rssi = 170;  // Unused?
-	uint32_t channel_spacing = (freq_max - freq_min) / (num_fh_channels + 2);
-	freq_min += channel_spacing / 2;
-
-	/* TDM.c randomises freq_min based on network Id, skip this for now */
-
-	radio_set_frequency(freq_min);
-	radio_set_channel_spacing(channel_spacing);
-
-	/* TDM.c starts on a channel chosen by network ID, just start at 0 for debug */
-	radio_set_channel(0, true);
-
-	/* TDM.c calls radio_configure() which seems to set up (unused) golay error correction, skip this */
-
-	/* TDM.c sets the network Id, this may interfere with expected packet layout, skip this */
-	// radio_set_network_id(1);
-
-	radio_set_transmit_power(tx_power);
-
-	/* TDM.c initialises the frequency hopping system, skip this while debugging */
-
-	/* TDM.c sets up features (unused): mavlink, golay, opp. resend, rts/cts */
-
-	/* TDM.c sets up other TDM variables (unused): ticks_per_byte, air_rate, packet_latency, max_data_packet_length,
-	 * silence_period, window_width, lbt_min_time, lbt_rand, TDM_Mode
-	 */
-}
-
-static bool radio_set_frequency(uint32_t freq)
-{
-	if (freq < 240000000UL || freq > 935000000UL) {
-		return false;
-	}
-
-	// RF FreqHz = (FCInte + (FCFrac/2<<19))*(NPRESC*Frq_xo/outdiv)
-	// bit 19 of FCRac always set, so  1 =< (FCFrac/2<<19) < 2 AND FCInte -=1;
-	ezradio_cmd_reply_t ezradioReply;
-	ezradio_get_property(EZRADIO_PROP_GRP_ID_MODEM, 1u,EZRADIO_PROP_GRP_INDEX_MODEM_CLKGEN_BAND, &ezradioReply);
-	uint8_t SY_SEL = (EZRADIO_PROP_MODEM_CLKGEN_BAND_SY_SEL_MASK & ezradioReply.GET_PROPERTY.DATA[0]) >> EZRADIO_PROP_MODEM_CLKGEN_BAND_SY_SEL_LSB;
-	uint8_t BAND   = (EZRADIO_PROP_MODEM_CLKGEN_BAND_BAND_MASK & ezradioReply.GET_PROPERTY.DATA[0]) >> EZRADIO_PROP_MODEM_CLKGEN_BAND_BAND_LSB;
-
-	uint32_t NPresc = NPRESC[SY_SEL];
-	uint32_t outdiv = FCODIV[BAND];
-	uint32_t Scale = (NPresc*RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ)/outdiv;
-	longin_t Integer,Frac;
-	uint64_t temp;																																// 32 bit overflowing, use 64
-	temp = (freq%Scale);
-	temp <<= 19u;
-	temp /= Scale;
-	Frac.L = temp;
-	Frac.L |= (1UL<<19);
-	Integer.L = freq/Scale;
-	Integer.L -- ;
-	if(Integer.L > 0x7FUL)return(false);
-	if(Frac.L > 0xFFFFFUL)return(false);
-	ezradio_set_property(EZRADIO_PROP_GRP_ID_FREQ_CONTROL, 4u,
-			EZRADIO_PROP_GRP_INDEX_FREQ_CONTROL_INTE,
-			Integer.b[0],Frac.b[2],Frac.b[1],Frac.b[0]);
-	return(true);
-}
-
-static bool radio_set_channel_spacing(uint32_t spacing)
-{
-	if (spacing > 2550000L)
-		return false;
-
-	//Freq_CTRL_CHAN_STEP_SIZE = (2^19 x outdiv x DesiredStepHz )/(NPresc x freq_xo)
-	// NPresc read from MODEM_CLKGEN_BAND:SY_SEL.
-	// outdiv read from MODEM_CLKGEN_BAND:BAND.
-	// freq_xo read from crstal xo
-	ezradio_cmd_reply_t ezradioReply;
-	ezradio_get_property(EZRADIO_PROP_GRP_ID_MODEM, 1u, EZRADIO_PROP_GRP_INDEX_MODEM_CLKGEN_BAND, &ezradioReply);
-	uint8_t SY_SEL = (EZRADIO_PROP_MODEM_CLKGEN_BAND_SY_SEL_MASK & ezradioReply.GET_PROPERTY.DATA[0]) >> EZRADIO_PROP_MODEM_CLKGEN_BAND_SY_SEL_LSB;
-	uint8_t BAND   = (EZRADIO_PROP_MODEM_CLKGEN_BAND_BAND_MASK & ezradioReply.GET_PROPERTY.DATA[0]) >> EZRADIO_PROP_MODEM_CLKGEN_BAND_BAND_LSB;
-    uint32_t NPresc = NPRESC[SY_SEL];
-	uint32_t outdiv = FCODIV[BAND];
-
-	longin_t StepSize;
-	StepSize.L = ((1UL<<19u)*outdiv*(spacing/1000));																	// was overflowing 32bits, so dive top and bottom by 1000 first
-	StepSize.L /= (NPresc*(RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ/1000));
-	ezradio_set_property(EZRADIO_PROP_GRP_ID_FREQ_CONTROL, 2u,
-			EZRADIO_PROP_GRP_INDEX_FREQ_CONTROL_CHANNEL_STEP_SIZE,
-			StepSize.b[1],StepSize.b[0]);
-	return(true);
-}
-
-static void radio_set_channel(uint8_t channel, bool Update)
-{
-	if((channel != rx_channel) || (channel != tx_channel))
-	{
-		rx_channel = tx_channel = channel;
-
-	  // when tx or rx called this will be updated
-	  // unfortunately the old code required updating channel variable in radio
-	  // however access to this variable is not available in the new radio
-	  // when in rx mode will need to manually change channel
-
-	  if(Update)
-	  {
-		  // Do we want to start receiving now?
-		  // ezradioStartRx(appRadioHandle);
-	  }
-	}
-}
-
-static void radio_set_network_id(uint16_t id)
-{
-	if (1)//!feature_golay)
-	{
-		longin_t val;
-		val.L = id;
-		// packet format is [preamble(16)][sync(2)][id(2)][length(1)][data(N)][CRC]
-		//#define RF_SET_PROPERTY_MATCH_VALUE_3 0x11, 0x30, 0x01, 0x06, 0x55
-		//#define RF_SET_PROPERTY_MATCH_VALUE_4 0x11, 0x30, 0x01, 0x09, 0xAA
-		ezradio_set_property(EZRADIO_PROP_GRP_ID_MATCH, 1u,
-				EZRADIO_PROP_GRP_INDEX_MATCH_VALUE_3,val.b[1]);
-		ezradio_set_property(EZRADIO_PROP_GRP_ID_MATCH, 1u,
-				EZRADIO_PROP_GRP_INDEX_MATCH_VALUE_4,val.b[0]);
-	}
-}
 
 static void radio_set_transmit_power(uint8_t power)
 {
@@ -515,6 +373,7 @@ static void configure_channel(const channel_id_t* channel_id)
 		// set freq band
 		DPRINT("Set frequency band index: %d", channel_id->channel_header.ch_freq_band);
 
+		/*
 		switch(channel_id->channel_header.ch_class)
 		{
 		case PHY_CLASS_LO_RATE:
@@ -574,6 +433,7 @@ static void configure_channel(const channel_id_t* channel_id)
 		default:
 			break;
 		}
+		*/
 
 		// TODO validate
 		switch(channel_id->channel_header.ch_freq_band)
@@ -707,7 +567,7 @@ static void configure_channel(const channel_id_t* channel_id)
 			DPRINT("Set channel freq index: %d", channel_id->center_freq_index);
 			break;
 		case PHY_BAND_915:
-			ez_channel_id = channel_id->center_freq_index / 8;
+			//ez_channel_id = channel_id->center_freq_index / 8;
 			// Assume all other properties set in rfd900x_si4460_interface/ezradioInit()
 			break;
 		}
@@ -754,7 +614,7 @@ static void configure_channel(const channel_id_t* channel_id)
 			DPRINT("Set channel freq index: %d", channel_id->center_freq_index);
 			break;
 		case PHY_BAND_915:
-			ez_channel_id = channel_id->center_freq_index / 8;
+			//ez_channel_id = channel_id->center_freq_index / 8;
 			// Assume all other properties set in ezradioInit()
 			break;
 		}
@@ -834,6 +694,9 @@ error_t hw_radio_init(alloc_packet_callback_t alloc_packet_cb,
 	DPRINT("INIT ezradioInit");
 	ezradioInit(&ezradio_int_callback);
 
+	/* Set Tx power */
+	radio_set_transmit_power(20);
+
 	/* Print EZRadio device number. */
 	DPRINT("INIT ezradio_part_info");
 	ezradio_part_info(&ezradioReply);
@@ -848,9 +711,6 @@ error_t hw_radio_init(alloc_packet_callback_t alloc_packet_cb,
 
 	// disable jump detection (todo: optimize)
 	//ezradio_set_property(RADIO_CONFIG_SET_PROPERTY_MODEM_RSSI_CONTROL2);
-
-	// Perform extra initialisation of radio
-    __rfd900x_si4460_init();
 
 	/* Reset radio fifos. */
 	DPRINT("INIT ezradioResetTRxFifo");

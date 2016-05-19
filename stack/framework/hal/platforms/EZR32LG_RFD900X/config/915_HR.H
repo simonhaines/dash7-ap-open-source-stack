@@ -1,690 +1,1019 @@
-/*! @file radio_config.h
- * @brief This file contains the automatically generated
- * configurations.
- *
- * @n WDS GUI Version: 3.2.9.0
- * @n Device: Si4460 Rev.: C2                                 
- *
- * @b COPYRIGHT
- * @n Silicon Laboratories Confidential
- * @n Copyright 2015 Silicon Laboratories, Inc.
- * @n http://www.silabs.com
- */
+// Copyright 2016 Silicon Laboratories, Inc.
+//
+//
 
-#ifndef RADIO_CONFIG_H_
-#define RADIO_CONFIG_H_
+// Modem configuration parameters
+// version: 1.3.0.94
+// afc_en: 0
+// ant_div: 1
+// BER_mode: 0
+// Ch_Fil_Bw_AFC: 0
+// Chip_Version: 2
+// crystal_tol: 20
+// dsa_mode: 0
+// dsource: 0
+// ETSI: 0
+// fc: 915000000
+// Fdev: 41667
+// Fdev_error: 0
+// fhch: 10
+// fhst: 250000
+// freq_xo: 30000000
+// hi_pfm_div_mode: 0
+// High_perf_Ch_Fil: 1
+// if_mode: 2
+// inputBW: 0
+// Manchester: 0
+// Max_Rb_Error: 0
+// modulation_type: 3
+// OSRtune: 0
+// pm_len: 16
+// pm_pattern: 0
+// raw_demod: 0
+// Rsymb: 166667
+// RXBW: 150000
+// TC: 29
 
-// USER DEFINED PARAMETERS
-// Define your own parameters here
+// Modem configuration calculated values
+// if_freq: -468750.0
+// nb_filter: 6
+// nb_filter_bw: 267.7
+// wb_filter: 6
+// wb_filter_bw: 267.7
 
-// INPUT DATA
-/*
-// Crys_freq(Hz): 30000000    Crys_tol(ppm): 20    IF_mode: 2    High_perf_Ch_Fil: 1    OSRtune: 0    Ch_Fil_Bw_AFC: 0    ANT_DIV: 0    PM_pattern: 0    
-// MOD_type: 3    Rsymb(sps): 166667    Fdev(Hz): 41667    RXBW(Hz): 150000    Manchester: 0    AFC_en: 0    Rsymb_error: 0.0    Chip-Version: 2    
-// RF Freq.(MHz): 915    API_TC: 29    fhst: 200000    inputBW: 0    BERT: 0    RAW_dout: 0    D_source: 0    Hi_pfm_div: 1    
-// API_ARR_Det_en: 0    Fdev_error: 0    API_ETSI: 0    
-// 
-// # RX IF frequency is  -468750 Hz
-// # WB filter 6 (BW = 267.70 kHz);  NB-filter 6 (BW = 267.70 kHz)
-// 
-// Modulation index: 0.5
-*/
-
-
-// CONFIGURATION PARAMETERS
-#define RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ                     30000000L
-#define RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER                    0x00
-#define RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH               0x07
-#define RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP        0x03
-#define RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET       0xF000
-
-#include "ezradio_patch_revC2A_general.h"
-
-
-// CONFIGURATION COMMANDS
-
-/*
-// Command:                  RF_POWER_UP
-// Description:              Command to power-up the device and select the operational mode and functionality.
-*/
-#define RF_POWER_UP 0x02, 0x81, 0x01, 0x01, 0xC9, 0xC3, 0x80
-
-/*
-// Command:                  RF_GPIO_PIN_CFG
-// Description:              Configures the GPIO pins.
-*/
-#define RF_GPIO_PIN_CFG 0x13, 0x16, 0x17, 0x21, 0x20, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_GLOBAL_XO_TUNE_2
-// Number of properties:     2
-// Group ID:                 0x00
-// Start ID:                 0x00
-// Default values:           0x40, 0x00, 
-// Descriptions:
-//   GLOBAL_XO_TUNE - Configure the internal capacitor frequency tuning bank for the crystal oscillator.
-//   GLOBAL_CLK_CFG - Clock configuration options.
-*/
-#define RF_GLOBAL_XO_TUNE_2 0x11, 0x00, 0x02, 0x00, 0x4D, 0x00
-
-/*
-// Set properties:           RF_GLOBAL_CONFIG_1
-// Number of properties:     1
-// Group ID:                 0x00
-// Start ID:                 0x03
-// Default values:           0x20, 
-// Descriptions:
-//   GLOBAL_CONFIG - Global configuration settings.
-*/
-#define RF_GLOBAL_CONFIG_1 0x11, 0x00, 0x01, 0x03, 0x20
-
-/*
-// Set properties:           RF_INT_CTL_ENABLE_2
-// Number of properties:     2
-// Group ID:                 0x01
-// Start ID:                 0x00
-// Default values:           0x04, 0x00, 
-// Descriptions:
-//   INT_CTL_ENABLE - This property provides for global enabling of the three interrupt groups (Chip, Modem and Packet Handler) in order to generate HW interrupts at the NIRQ pin.
-//   INT_CTL_PH_ENABLE - Enable individual interrupt sources within the Packet Handler Interrupt Group to generate a HW interrupt on the NIRQ output pin.
-*/
-#define RF_INT_CTL_ENABLE_2 0x11, 0x01, 0x02, 0x00, 0x01, 0x3C
-
-/*
-// Set properties:           RF_FRR_CTL_A_MODE_4
-// Number of properties:     4
-// Group ID:                 0x02
-// Start ID:                 0x00
-// Default values:           0x01, 0x02, 0x09, 0x00, 
-// Descriptions:
-//   FRR_CTL_A_MODE - Fast Response Register A Configuration.
-//   FRR_CTL_B_MODE - Fast Response Register B Configuration.
-//   FRR_CTL_C_MODE - Fast Response Register C Configuration.
-//   FRR_CTL_D_MODE - Fast Response Register D Configuration.
-*/
-#define RF_FRR_CTL_A_MODE_4 0x11, 0x02, 0x04, 0x00, 0x02, 0x03, 0x09, 0x0A
-
-/*
-// Set properties:           RF_PREAMBLE_TX_LENGTH_9
-// Number of properties:     9
-// Group ID:                 0x10
-// Start ID:                 0x00
-// Default values:           0x08, 0x14, 0x00, 0x0F, 0x21, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   PREAMBLE_TX_LENGTH - Configure length of TX Preamble.
-//   PREAMBLE_CONFIG_STD_1 - Configuration of reception of a packet with a Standard Preamble pattern.
-//   PREAMBLE_CONFIG_NSTD - Configuration of transmission/reception of a packet with a Non-Standard Preamble pattern.
-//   PREAMBLE_CONFIG_STD_2 - Configuration of timeout periods during reception of a packet with Standard Preamble pattern.
-//   PREAMBLE_CONFIG - General configuration bits for the Preamble field.
-//   PREAMBLE_PATTERN_31_24 - Configuration of the bit values describing a Non-Standard Preamble pattern.
-//   PREAMBLE_PATTERN_23_16 - Configuration of the bit values describing a Non-Standard Preamble pattern.
-//   PREAMBLE_PATTERN_15_8 - Configuration of the bit values describing a Non-Standard Preamble pattern.
-//   PREAMBLE_PATTERN_7_0 - Configuration of the bit values describing a Non-Standard Preamble pattern.
-*/
-#define RF_PREAMBLE_TX_LENGTH_9 0x11, 0x10, 0x09, 0x00, 0x08, 0x14, 0x00, 0x0F, 0x31, 0x00, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_SYNC_CONFIG_6
-// Number of properties:     6
-// Group ID:                 0x11
-// Start ID:                 0x00
-// Default values:           0x01, 0x2D, 0xD4, 0x2D, 0xD4, 0x00, 
-// Descriptions:
-//   SYNC_CONFIG - Sync Word configuration bits.
-//   SYNC_BITS_31_24 - Sync word.
-//   SYNC_BITS_23_16 - Sync word.
-//   SYNC_BITS_15_8 - Sync word.
-//   SYNC_BITS_7_0 - Sync word.
-//   SYNC_CONFIG2 - Sync Word configuration bits.
-*/
-#define RF_SYNC_CONFIG_6 0x11, 0x11, 0x06, 0x00, 0x01, 0xD0, 0xE6, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_PKT_CRC_CONFIG_7
-// Number of properties:     7
-// Group ID:                 0x12
-// Start ID:                 0x00
-// Default values:           0x00, 0x01, 0x08, 0xFF, 0xFF, 0x00, 0x00, 
-// Descriptions:
-//   PKT_CRC_CONFIG - Select a CRC polynomial and seed.
-//   PKT_WHT_POLY_15_8 - 16-bit polynomial value for the PN Generator (e.g., for Data Whitening)
-//   PKT_WHT_POLY_7_0 - 16-bit polynomial value for the PN Generator (e.g., for Data Whitening)
-//   PKT_WHT_SEED_15_8 - 16-bit seed value for the PN Generator (e.g., for Data Whitening)
-//   PKT_WHT_SEED_7_0 - 16-bit seed value for the PN Generator (e.g., for Data Whitening)
-//   PKT_WHT_BIT_NUM - Selects which bit of the LFSR (used to generate the PN / data whitening sequence) is used as the output bit for data scrambling.
-//   PKT_CONFIG1 - General configuration bits for transmission or reception of a packet.
-*/
-#define RF_PKT_CRC_CONFIG_7 0x11, 0x12, 0x07, 0x00, 0x05, 0x01, 0x08, 0xFF, 0xFF, 0x00, 0x02
-
-/*
-// Set properties:           RF_PKT_LEN_12
-// Number of properties:     12
-// Group ID:                 0x12
-// Start ID:                 0x08
-// Default values:           0x00, 0x00, 0x00, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   PKT_LEN - Configuration bits for reception of a variable length packet.
-//   PKT_LEN_FIELD_SOURCE - Field number containing the received packet length byte(s).
-//   PKT_LEN_ADJUST - Provides for adjustment/offset of the received packet length value (in order to accommodate a variety of methods of defining total packet length).
-//   PKT_TX_THRESHOLD - TX FIFO almost empty threshold.
-//   PKT_RX_THRESHOLD - RX FIFO Almost Full threshold.
-//   PKT_FIELD_1_LENGTH_12_8 - Unsigned 13-bit Field 1 length value.
-//   PKT_FIELD_1_LENGTH_7_0 - Unsigned 13-bit Field 1 length value.
-//   PKT_FIELD_1_CONFIG - General data processing and packet configuration bits for Field 1.
-//   PKT_FIELD_1_CRC_CONFIG - Configuration of CRC control bits across Field 1.
-//   PKT_FIELD_2_LENGTH_12_8 - Unsigned 13-bit Field 2 length value.
-//   PKT_FIELD_2_LENGTH_7_0 - Unsigned 13-bit Field 2 length value.
-//   PKT_FIELD_2_CONFIG - General data processing and packet configuration bits for Field 2.
-*/
-#define RF_PKT_LEN_12 0x11, 0x12, 0x0C, 0x08, 0x2A, 0x01, 0xFE, 0x30, 0x30, 0x00, 0x01, 0x06, 0xA2, 0x00, 0x3F, 0x02
-
-/*
-// Set properties:           RF_PKT_FIELD_2_CRC_CONFIG_12
-// Number of properties:     12
-// Group ID:                 0x12
-// Start ID:                 0x14
-// Default values:           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   PKT_FIELD_2_CRC_CONFIG - Configuration of CRC control bits across Field 2.
-//   PKT_FIELD_3_LENGTH_12_8 - Unsigned 13-bit Field 3 length value.
-//   PKT_FIELD_3_LENGTH_7_0 - Unsigned 13-bit Field 3 length value.
-//   PKT_FIELD_3_CONFIG - General data processing and packet configuration bits for Field 3.
-//   PKT_FIELD_3_CRC_CONFIG - Configuration of CRC control bits across Field 3.
-//   PKT_FIELD_4_LENGTH_12_8 - Unsigned 13-bit Field 4 length value.
-//   PKT_FIELD_4_LENGTH_7_0 - Unsigned 13-bit Field 4 length value.
-//   PKT_FIELD_4_CONFIG - General data processing and packet configuration bits for Field 4.
-//   PKT_FIELD_4_CRC_CONFIG - Configuration of CRC control bits across Field 4.
-//   PKT_FIELD_5_LENGTH_12_8 - Unsigned 13-bit Field 5 length value.
-//   PKT_FIELD_5_LENGTH_7_0 - Unsigned 13-bit Field 5 length value.
-//   PKT_FIELD_5_CONFIG - General data processing and packet configuration bits for Field 5.
-*/
-#define RF_PKT_FIELD_2_CRC_CONFIG_12 0x11, 0x12, 0x0C, 0x14, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_PKT_FIELD_5_CRC_CONFIG_12
-// Number of properties:     12
-// Group ID:                 0x12
-// Start ID:                 0x20
-// Default values:           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   PKT_FIELD_5_CRC_CONFIG - Configuration of CRC control bits across Field 5.
-//   PKT_RX_FIELD_1_LENGTH_12_8 - Unsigned 13-bit RX Field 1 length value.
-//   PKT_RX_FIELD_1_LENGTH_7_0 - Unsigned 13-bit RX Field 1 length value.
-//   PKT_RX_FIELD_1_CONFIG - General data processing and packet configuration bits for RX Field 1.
-//   PKT_RX_FIELD_1_CRC_CONFIG - Configuration of CRC control bits across RX Field 1.
-//   PKT_RX_FIELD_2_LENGTH_12_8 - Unsigned 13-bit RX Field 2 length value.
-//   PKT_RX_FIELD_2_LENGTH_7_0 - Unsigned 13-bit RX Field 2 length value.
-//   PKT_RX_FIELD_2_CONFIG - General data processing and packet configuration bits for RX Field 2.
-//   PKT_RX_FIELD_2_CRC_CONFIG - Configuration of CRC control bits across RX Field 2.
-//   PKT_RX_FIELD_3_LENGTH_12_8 - Unsigned 13-bit RX Field 3 length value.
-//   PKT_RX_FIELD_3_LENGTH_7_0 - Unsigned 13-bit RX Field 3 length value.
-//   PKT_RX_FIELD_3_CONFIG - General data processing and packet configuration bits for RX Field 3.
-*/
-#define RF_PKT_FIELD_5_CRC_CONFIG_12 0x11, 0x12, 0x0C, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_PKT_RX_FIELD_3_CRC_CONFIG_9
-// Number of properties:     9
-// Group ID:                 0x12
-// Start ID:                 0x2C
-// Default values:           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   PKT_RX_FIELD_3_CRC_CONFIG - Configuration of CRC control bits across RX Field 3.
-//   PKT_RX_FIELD_4_LENGTH_12_8 - Unsigned 13-bit RX Field 4 length value.
-//   PKT_RX_FIELD_4_LENGTH_7_0 - Unsigned 13-bit RX Field 4 length value.
-//   PKT_RX_FIELD_4_CONFIG - General data processing and packet configuration bits for RX Field 4.
-//   PKT_RX_FIELD_4_CRC_CONFIG - Configuration of CRC control bits across RX Field 4.
-//   PKT_RX_FIELD_5_LENGTH_12_8 - Unsigned 13-bit RX Field 5 length value.
-//   PKT_RX_FIELD_5_LENGTH_7_0 - Unsigned 13-bit RX Field 5 length value.
-//   PKT_RX_FIELD_5_CONFIG - General data processing and packet configuration bits for RX Field 5.
-//   PKT_RX_FIELD_5_CRC_CONFIG - Configuration of CRC control bits across RX Field 5.
-*/
-#define RF_PKT_RX_FIELD_3_CRC_CONFIG_9 0x11, 0x12, 0x09, 0x2C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_PKT_CRC_SEED_31_24_4
-// Number of properties:     4
-// Group ID:                 0x12
-// Start ID:                 0x36
-// Default values:           0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   PKT_CRC_SEED_31_24 - 32-bit seed value for the 32-bit CRC engine
-//   PKT_CRC_SEED_23_16 - 32-bit seed value for the 32-bit CRC engine
-//   PKT_CRC_SEED_15_8 - 32-bit seed value for the 32-bit CRC engine
-//   PKT_CRC_SEED_7_0 - 32-bit seed value for the 32-bit CRC engine
-*/
-#define RF_PKT_CRC_SEED_31_24_4 0x11, 0x12, 0x04, 0x36, 0x00, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_MODEM_MOD_TYPE_12
-// Number of properties:     12
-// Group ID:                 0x20
-// Start ID:                 0x00
-// Default values:           0x02, 0x80, 0x07, 0x0F, 0x42, 0x40, 0x01, 0xC9, 0xC3, 0x80, 0x00, 0x06, 
-// Descriptions:
-//   MODEM_MOD_TYPE - Selects the type of modulation. In TX mode, additionally selects the source of the modulation.
-//   MODEM_MAP_CONTROL - Controls polarity and mapping of transmit and receive bits.
-//   MODEM_DSM_CTRL - Miscellaneous control bits for the Delta-Sigma Modulator (DSM) in the PLL Synthesizer.
-//   MODEM_DATA_RATE_2 - Unsigned 24-bit value used to determine the TX data rate
-//   MODEM_DATA_RATE_1 - Unsigned 24-bit value used to determine the TX data rate
-//   MODEM_DATA_RATE_0 - Unsigned 24-bit value used to determine the TX data rate
-//   MODEM_TX_NCO_MODE_3 - TX Gaussian filter oversampling ratio and Byte 3 of unsigned 26-bit TX Numerically Controlled Oscillator (NCO) modulus.
-//   MODEM_TX_NCO_MODE_2 - TX Gaussian filter oversampling ratio and Byte 3 of unsigned 26-bit TX Numerically Controlled Oscillator (NCO) modulus.
-//   MODEM_TX_NCO_MODE_1 - TX Gaussian filter oversampling ratio and Byte 3 of unsigned 26-bit TX Numerically Controlled Oscillator (NCO) modulus.
-//   MODEM_TX_NCO_MODE_0 - TX Gaussian filter oversampling ratio and Byte 3 of unsigned 26-bit TX Numerically Controlled Oscillator (NCO) modulus.
-//   MODEM_FREQ_DEV_2 - 17-bit unsigned TX frequency deviation word.
-//   MODEM_FREQ_DEV_1 - 17-bit unsigned TX frequency deviation word.
-*/
-#define RF_MODEM_MOD_TYPE_12 0x11, 0x20, 0x0C, 0x00, 0x03, 0x00, 0x07, 0x32, 0xDC, 0xDC, 0x09, 0xC9, 0xC3, 0x80, 0x00, 0x05
-
-/*
-// Set properties:           RF_MODEM_FREQ_DEV_0_1
-// Number of properties:     1
-// Group ID:                 0x20
-// Start ID:                 0x0C
-// Default values:           0xD3, 
-// Descriptions:
-//   MODEM_FREQ_DEV_0 - 17-bit unsigned TX frequency deviation word.
-*/
-#define RF_MODEM_FREQ_DEV_0_1 0x11, 0x20, 0x01, 0x0C, 0xB0
-
-/*
-// Set properties:           RF_MODEM_TX_RAMP_DELAY_12
-// Number of properties:     12
-// Group ID:                 0x20
-// Start ID:                 0x18
-// Default values:           0x01, 0x00, 0x08, 0x03, 0xC0, 0x00, 0x10, 0x20, 0x00, 0x00, 0x00, 0x4B, 
-// Descriptions:
-//   MODEM_TX_RAMP_DELAY - TX ramp-down delay setting.
-//   MODEM_MDM_CTRL - MDM control.
-//   MODEM_IF_CONTROL - Selects Fixed-IF, Scaled-IF, or Zero-IF mode of RX Modem operation.
-//   MODEM_IF_FREQ_2 - the IF frequency setting (an 18-bit signed number).
-//   MODEM_IF_FREQ_1 - the IF frequency setting (an 18-bit signed number).
-//   MODEM_IF_FREQ_0 - the IF frequency setting (an 18-bit signed number).
-//   MODEM_DECIMATION_CFG1 - Specifies three decimator ratios for the Cascaded Integrator Comb (CIC) filter.
-//   MODEM_DECIMATION_CFG0 - Specifies miscellaneous parameters and decimator ratios for the Cascaded Integrator Comb (CIC) filter.
-//   MODEM_DECIMATION_CFG2 - Specifies miscellaneous decimator filter selections.
-//   MODEM_IFPKD_THRESHOLDS - 
-//   MODEM_BCR_OSR_1 - RX BCR/Slicer oversampling rate (12-bit unsigned number).
-//   MODEM_BCR_OSR_0 - RX BCR/Slicer oversampling rate (12-bit unsigned number).
-*/
-#define RF_MODEM_TX_RAMP_DELAY_12 0x11, 0x20, 0x0C, 0x18, 0x01, 0x00, 0x08, 0x03, 0xC0, 0x00, 0x00, 0x20, 0x00, 0xE8, 0x00, 0x5A
-
-/*
-// Set properties:           RF_MODEM_BCR_NCO_OFFSET_2_12
-// Number of properties:     12
-// Group ID:                 0x20
-// Start ID:                 0x24
-// Default values:           0x06, 0xD3, 0xA0, 0x06, 0xD3, 0x02, 0xC0, 0x00, 0x00, 0x23, 0x83, 0x69, 
-// Descriptions:
-//   MODEM_BCR_NCO_OFFSET_2 - RX BCR NCO offset value (an unsigned 22-bit number).
-//   MODEM_BCR_NCO_OFFSET_1 - RX BCR NCO offset value (an unsigned 22-bit number).
-//   MODEM_BCR_NCO_OFFSET_0 - RX BCR NCO offset value (an unsigned 22-bit number).
-//   MODEM_BCR_GAIN_1 - The unsigned 11-bit RX BCR loop gain value.
-//   MODEM_BCR_GAIN_0 - The unsigned 11-bit RX BCR loop gain value.
-//   MODEM_BCR_GEAR - RX BCR loop gear control.
-//   MODEM_BCR_MISC1 - Miscellaneous control bits for the RX BCR loop.
-//   MODEM_BCR_MISC0 - Miscellaneous RX BCR loop controls.
-//   MODEM_AFC_GEAR - RX AFC loop gear control.
-//   MODEM_AFC_WAIT - RX AFC loop wait time control.
-//   MODEM_AFC_GAIN_1 - Sets the gain of the PLL-based AFC acquisition loop, and provides miscellaneous control bits for AFC functionality.
-//   MODEM_AFC_GAIN_0 - Sets the gain of the PLL-based AFC acquisition loop, and provides miscellaneous control bits for AFC functionality.
-*/
-#define RF_MODEM_BCR_NCO_OFFSET_2_12 0x11, 0x20, 0x0C, 0x24, 0x05, 0xB0, 0x5C, 0x07, 0xFF, 0x02, 0x00, 0x00, 0x00, 0x23, 0x85, 0xB0
-
-/*
-// Set properties:           RF_MODEM_AFC_LIMITER_1_3
-// Number of properties:     3
-// Group ID:                 0x20
-// Start ID:                 0x30
-// Default values:           0x00, 0x40, 0xA0, 
-// Descriptions:
-//   MODEM_AFC_LIMITER_1 - Set the AFC limiter value.
-//   MODEM_AFC_LIMITER_0 - Set the AFC limiter value.
-//   MODEM_AFC_MISC - Specifies miscellaneous AFC control bits.
-*/
-#define RF_MODEM_AFC_LIMITER_1_3 0x11, 0x20, 0x03, 0x30, 0x00, 0xA5, 0xA0
-
-/*
-// Set properties:           RF_MODEM_AGC_CONTROL_1
-// Number of properties:     1
-// Group ID:                 0x20
-// Start ID:                 0x35
-// Default values:           0xE0, 
-// Descriptions:
-//   MODEM_AGC_CONTROL - Miscellaneous control bits for the Automatic Gain Control (AGC) function in the RX Chain.
-*/
-#define RF_MODEM_AGC_CONTROL_1 0x11, 0x20, 0x01, 0x35, 0xE0
-
-/*
-// Set properties:           RF_MODEM_AGC_WINDOW_SIZE_12
-// Number of properties:     12
-// Group ID:                 0x20
-// Start ID:                 0x38
-// Default values:           0x11, 0x10, 0x10, 0x0B, 0x1C, 0x40, 0x00, 0x00, 0x2B, 0x0C, 0xA4, 0x03, 
-// Descriptions:
-//   MODEM_AGC_WINDOW_SIZE - Specifies the size of the measurement and settling windows for the AGC algorithm.
-//   MODEM_AGC_RFPD_DECAY - Sets the decay time of the RF peak detectors.
-//   MODEM_AGC_IFPD_DECAY - Sets the decay time of the IF peak detectors.
-//   MODEM_FSK4_GAIN1 - Specifies the gain factor of the secondary branch in 4(G)FSK ISI-suppression.
-//   MODEM_FSK4_GAIN0 - Specifies the gain factor of the primary branch in 4(G)FSK ISI-suppression.
-//   MODEM_FSK4_TH1 - 16 bit 4(G)FSK slicer threshold.
-//   MODEM_FSK4_TH0 - 16 bit 4(G)FSK slicer threshold.
-//   MODEM_FSK4_MAP - 4(G)FSK symbol mapping code.
-//   MODEM_OOK_PDTC - Configures the attack and decay times of the OOK Peak Detector.
-//   MODEM_OOK_BLOPK - Configures the slicing reference level of the OOK Peak Detector.
-//   MODEM_OOK_CNT1 - OOK control.
-//   MODEM_OOK_MISC - Selects the detector(s) used for demodulation of an OOK signal, or for demodulation of a (G)FSK signal when using the asynchronous demodulator.
-*/
-#define RF_MODEM_AGC_WINDOW_SIZE_12 0x11, 0x20, 0x0C, 0x38, 0x11, 0x14, 0x14, 0x80, 0x1A, 0x20, 0x00, 0x00, 0x28, 0x0C, 0xA4, 0x23
-
-/*
-// Set properties:           RF_MODEM_RAW_CONTROL_8
-// Number of properties:     8
-// Group ID:                 0x20
-// Start ID:                 0x45
-// Default values:           0x02, 0x00, 0xA3, 0x02, 0x80, 0xFF, 0x0C, 0x01, 
-// Descriptions:
-//   MODEM_RAW_CONTROL - Defines gain and enable controls for raw / nonstandard mode.
-//   MODEM_RAW_EYE_1 - 11 bit eye-open detector threshold.
-//   MODEM_RAW_EYE_0 - 11 bit eye-open detector threshold.
-//   MODEM_ANT_DIV_MODE - Antenna diversity mode settings.
-//   MODEM_ANT_DIV_CONTROL - Specifies controls for the Antenna Diversity algorithm.
-//   MODEM_RSSI_THRESH - Configures the RSSI threshold.
-//   MODEM_RSSI_JUMP_THRESH - Configures the RSSI Jump Detection threshold.
-//   MODEM_RSSI_CONTROL - Control of the averaging modes and latching time for reporting RSSI value(s).
-*/
-#define RF_MODEM_RAW_CONTROL_8 0x11, 0x20, 0x08, 0x45, 0x03, 0x00, 0x73, 0x02, 0x00, 0xFF, 0x06, 0x02
-
-/*
-// Set properties:           RF_MODEM_RSSI_CONTROL_3
-// Number of properties:     3
-// Group ID:                 0x20
-// Start ID:                 0x4C
-// Default values:           0x01, 0x00, 0x40, 
-// Descriptions:
-//   MODEM_RSSI_CONTROL - Control of the averaging modes and latching time for reporting RSSI value(s).
-//   MODEM_RSSI_CONTROL2 - RSSI Jump Detection control.
-//   MODEM_RSSI_COMP - RSSI compensation value.
-*/
-#define RF_MODEM_RSSI_CONTROL_3 0x11, 0x20, 0x03, 0x4C, 0x09, 0x1C, 0x40
-
-/*
-// Set properties:           RF_MODEM_RAW_SEARCH2_2
-// Number of properties:     2
-// Group ID:                 0x20
-// Start ID:                 0x50
-// Default values:           0x00, 0x08, 
-// Descriptions:
-//   MODEM_RAW_SEARCH2 - Defines and controls the search period length for the Moving Average and Min-Max detectors.
-//   MODEM_CLKGEN_BAND - Select PLL Synthesizer output divider ratio as a function of frequency band.
-*/
-#define RF_MODEM_RAW_SEARCH2_2 0x11, 0x20, 0x02, 0x50, 0x84, 0x08
-
-/*
-// Set properties:           RF_MODEM_SPIKE_DET_2
-// Number of properties:     2
-// Group ID:                 0x20
-// Start ID:                 0x54
-// Default values:           0x00, 0x00, 
-// Descriptions:
-//   MODEM_SPIKE_DET - Configures the threshold for (G)FSK Spike Detection.
-//   MODEM_ONE_SHOT_AFC - Configures parameters for th e One Shot AFC function and for BCR timing/acquisition.
-*/
-#define RF_MODEM_SPIKE_DET_2 0x11, 0x20, 0x02, 0x54, 0x03, 0x07
-
-/*
-// Set properties:           RF_MODEM_RSSI_MUTE_1
-// Number of properties:     1
-// Group ID:                 0x20
-// Start ID:                 0x57
-// Default values:           0x00, 
-// Descriptions:
-//   MODEM_RSSI_MUTE - Configures muting of the RSSI to avoid false RSSI interrupts.
-*/
-#define RF_MODEM_RSSI_MUTE_1 0x11, 0x20, 0x01, 0x57, 0x00
-
-/*
-// Set properties:           RF_MODEM_DSA_CTRL1_5
-// Number of properties:     5
-// Group ID:                 0x20
-// Start ID:                 0x5B
-// Default values:           0x00, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   MODEM_DSA_CTRL1 - Configures parameters for the Signal Arrival Detection circuit block and algorithm.
-//   MODEM_DSA_CTRL2 - Configures parameters for the Signal Arrival Detection circuit block and algorithm.
-//   MODEM_DSA_QUAL - Configures parameters for the Eye Opening qualification m ethod of the Signal Arrival Detection algorithm.
-//   MODEM_DSA_RSSI - Signal Arrival Detect RSSI Qualifier Config
-//   MODEM_DSA_MISC - Miscellaneous detection of signal arrival bits.
-*/
-#define RF_MODEM_DSA_CTRL1_5 0x11, 0x20, 0x05, 0x5B, 0x40, 0x04, 0x03, 0x78, 0x20
-
-/*
-// Set properties:           RF_MODEM_CHFLT_RX1_CHFLT_COE13_7_0_12
-// Number of properties:     12
-// Group ID:                 0x21
-// Start ID:                 0x00
-// Default values:           0xFF, 0xBA, 0x0F, 0x51, 0xCF, 0xA9, 0xC9, 0xFC, 0x1B, 0x1E, 0x0F, 0x01, 
-// Descriptions:
-//   MODEM_CHFLT_RX1_CHFLT_COE13_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE12_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE11_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE10_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE9_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE8_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE7_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE6_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE5_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE4_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE3_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE2_7_0 - Filter coefficients for the first set of RX filter coefficients.
-*/
-#define RF_MODEM_CHFLT_RX1_CHFLT_COE13_7_0_12 0x11, 0x21, 0x0C, 0x00, 0x5B, 0x47, 0x0F, 0xC0, 0x6D, 0x25, 0xF4, 0xDB, 0xD6, 0xDF, 0xEC, 0xF7
-
-/*
-// Set properties:           RF_MODEM_CHFLT_RX1_CHFLT_COE1_7_0_12
-// Number of properties:     12
-// Group ID:                 0x21
-// Start ID:                 0x0C
-// Default values:           0xFC, 0xFD, 0x15, 0xFF, 0x00, 0x0F, 0xFF, 0xC4, 0x30, 0x7F, 0xF5, 0xB5, 
-// Descriptions:
-//   MODEM_CHFLT_RX1_CHFLT_COE1_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COE0_7_0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COEM0 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COEM1 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COEM2 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX1_CHFLT_COEM3 - Filter coefficients for the first set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE13_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE12_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE11_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE10_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE9_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE8_7_0 - Filter coefficients for the second set of RX filter coefficients.
-*/
-#define RF_MODEM_CHFLT_RX1_CHFLT_COE1_7_0_12 0x11, 0x21, 0x0C, 0x0C, 0xFE, 0x01, 0x15, 0xF0, 0xFF, 0x03, 0x5B, 0x47, 0x0F, 0xC0, 0x6D, 0x25
-
-/*
-// Set properties:           RF_MODEM_CHFLT_RX2_CHFLT_COE7_7_0_12
-// Number of properties:     12
-// Group ID:                 0x21
-// Start ID:                 0x18
-// Default values:           0xB8, 0xDE, 0x05, 0x17, 0x16, 0x0C, 0x03, 0x00, 0x15, 0xFF, 0x00, 0x00, 
-// Descriptions:
-//   MODEM_CHFLT_RX2_CHFLT_COE7_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE6_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE5_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE4_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE3_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE2_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE1_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COE0_7_0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COEM0 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COEM1 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COEM2 - Filter coefficients for the second set of RX filter coefficients.
-//   MODEM_CHFLT_RX2_CHFLT_COEM3 - Filter coefficients for the second set of RX filter coefficients.
-*/
-#define RF_MODEM_CHFLT_RX2_CHFLT_COE7_7_0_12 0x11, 0x21, 0x0C, 0x18, 0xF4, 0xDB, 0xD6, 0xDF, 0xEC, 0xF7, 0xFE, 0x01, 0x15, 0xF0, 0xFF, 0x03
-
-/*
-// Set properties:           RF_PA_MODE_4
-// Number of properties:     4
-// Group ID:                 0x22
-// Start ID:                 0x00
-// Default values:           0x08, 0x7F, 0x00, 0x5D, 
-// Descriptions:
-//   PA_MODE - Selects the PA operating mode, and selects resolution of PA power adjustment (i.e., step size).
-//   PA_PWR_LVL - Configuration of PA output power level.
-//   PA_BIAS_CLKDUTY - Configuration of the PA Bias and duty cycle of the TX clock source.
-//   PA_TC - Configuration of PA ramping parameters.
-*/
-#define RF_PA_MODE_4 0x11, 0x22, 0x04, 0x00, 0x18, 0x1A, 0xC0, 0x3D
-
-/*
-// Set properties:           RF_SYNTH_PFDCP_CPFF_7
-// Number of properties:     7
-// Group ID:                 0x23
-// Start ID:                 0x00
-// Default values:           0x2C, 0x0E, 0x0B, 0x04, 0x0C, 0x73, 0x03, 
-// Descriptions:
-//   SYNTH_PFDCP_CPFF - Feed forward charge pump current selection.
-//   SYNTH_PFDCP_CPINT - Integration charge pump current selection.
-//   SYNTH_VCO_KV - Gain scaling factors (Kv) for the VCO tuning varactors on both the integrated-path and feed forward path.
-//   SYNTH_LPFILT3 - Value of resistor R2 in feed-forward path of loop filter.
-//   SYNTH_LPFILT2 - Value of capacitor C2 in feed-forward path of loop filter.
-//   SYNTH_LPFILT1 - Value of capacitors C1 and C3 in feed-forward path of loop filter.
-//   SYNTH_LPFILT0 - Bias current of the active amplifier in the feed-forward loop filter.
-*/
-#define RF_SYNTH_PFDCP_CPFF_7 0x11, 0x23, 0x07, 0x00, 0x39, 0x04, 0x0B, 0x05, 0x04, 0x01, 0x03
-
-/*
-// Set properties:           RF_MATCH_VALUE_1_12
-// Number of properties:     12
-// Group ID:                 0x30
-// Start ID:                 0x00
-// Default values:           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-// Descriptions:
-//   MATCH_VALUE_1 - Match value to be compared with the result of logically AND-ing (bit-wise) the Mask 1 value with the received Match 1 byte.
-//   MATCH_MASK_1 - Mask value to be logically AND-ed (bit-wise) with the Match 1 byte.
-//   MATCH_CTRL_1 - Enable for Packet Match functionality, and configuration of Match Byte 1.
-//   MATCH_VALUE_2 - Match value to be compared with the result of logically AND-ing (bit-wise) the Mask 2 value with the received Match 2 byte.
-//   MATCH_MASK_2 - Mask value to be logically AND-ed (bit-wise) with the Match 2 byte.
-//   MATCH_CTRL_2 - Configuration of Match Byte 2.
-//   MATCH_VALUE_3 - Match value to be compared with the result of logically AND-ing (bit-wise) the Mask 3 value with the received Match 3 byte.
-//   MATCH_MASK_3 - Mask value to be logically AND-ed (bit-wise) with the Match 3 byte.
-//   MATCH_CTRL_3 - Configuration of Match Byte 3.
-//   MATCH_VALUE_4 - Match value to be compared with the result of logically AND-ing (bit-wise) the Mask 4 value with the received Match 4 byte.
-//   MATCH_MASK_4 - Mask value to be logically AND-ed (bit-wise) with the Match 4 byte.
-//   MATCH_CTRL_4 - Configuration of Match Byte 4.
-*/
-#define RF_MATCH_VALUE_1_12 0x11, 0x30, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-/*
-// Set properties:           RF_FREQ_CONTROL_INTE_8
-// Number of properties:     8
-// Group ID:                 0x40
-// Start ID:                 0x00
-// Default values:           0x3C, 0x08, 0x00, 0x00, 0x00, 0x00, 0x20, 0xFF, 
-// Descriptions:
-//   FREQ_CONTROL_INTE - Frac-N PLL Synthesizer integer divide number.
-//   FREQ_CONTROL_FRAC_2 - Frac-N PLL fraction number.
-//   FREQ_CONTROL_FRAC_1 - Frac-N PLL fraction number.
-//   FREQ_CONTROL_FRAC_0 - Frac-N PLL fraction number.
-//   FREQ_CONTROL_CHANNEL_STEP_SIZE_1 - EZ Frequency Programming channel step size.
-//   FREQ_CONTROL_CHANNEL_STEP_SIZE_0 - EZ Frequency Programming channel step size.
-//   FREQ_CONTROL_W_SIZE - Set window gating period (in number of crystal reference clock cycles) for counting VCO frequency during calibration.
-//   FREQ_CONTROL_VCOCNT_RX_ADJ - Adjust target count for VCO calibration in RX mode.
-*/
-#define RF_FREQ_CONTROL_INTE_8 0x11, 0x40, 0x08, 0x00, 0x3C, 0x08, 0x00, 0x00, 0x1B, 0x4F, 0x20, 0xFF
+// Enclosing macro to prevent multiple inclusion
+#ifndef __SLAB_RADIO_CONFIG_WDS__
+#define __SLAB_RADIO_CONFIG_WDS__
 
 
-// AUTOMATICALLY GENERATED CODE! 
-// DO NOT EDIT/MODIFY BELOW THIS LINE!
-// --------------------------------------------
+
+
+#define RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ 30000000L
+
+#define RADIO_CONFIGURATION_DATA_RADIO_CHIP_FAMILY RADIO_CHIP_FAMILY_EZRADIOPRO
+
+#define RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH (64)
+#define RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP (3)
+#define RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET (61440)
+#define RADIO_CONFIGURATION_DATA_VARIABLEPACKETSTATE (1)
+#define RADIO_CONFIGURATION_DATA_CUSTOM_PAYLOAD {0x1C, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5, 0xC5}
+
+
+#define RF_POWER_UP 0x02, 0x01, 0x00, 0x01, 0xC9, 0xC3, 0x80
+
+#define RF_GPIO_PIN_CFG 0x13, 0x16, 0x17, 0x21, 0x22, 0x00, 0x00, 0x00
+
+#define RF_SET_PROPERTY_GLOBAL_XO_TUNE 0x11, 0x00, 0x01, 0x00, 0x4D
+
+#define RF_SET_PROPERTY_FRR_CTL_A_MODE 0x11, 0x02, 0x01, 0x00, 0x02
+
+#define RF_SET_PROPERTY_FRR_CTL_B_MODE 0x11, 0x02, 0x01, 0x01, 0x03
+
+#define RF_SET_PROPERTY_FRR_CTL_C_MODE 0x11, 0x02, 0x01, 0x02, 0x09
+
+#define RF_SET_PROPERTY_FRR_CTL_D_MODE 0x11, 0x02, 0x01, 0x03, 0x0A
+
+#define RF_SET_PROPERTY_INT_CTL_ENABLE 0x11, 0x01, 0x01, 0x00, 0x01
+
+#define RF_SET_PROPERTY_INT_CTL_PH_ENABLE 0x11, 0x01, 0x01, 0x01, 0x38
+
+#define RF_SET_PROPERTY_INT_CTL_MODEM_ENABLE 0x11, 0x01, 0x01, 0x02, 0x00
+
+#define RF_SET_PROPERTY_INT_CTL_CHIP_ENABLE 0x11, 0x01, 0x01, 0x03, 0x00
+
+#define RF_SET_PROPERTY_PA_MODE 0x11, 0x22, 0x01, 0x00, 0x08
+
+#define RF_SET_PROPERTY_PA_PWR_LVL 0x11, 0x22, 0x01, 0x01, 0x1A
+
+#define RF_SET_PROPERTY_PA_BIAS_CLKDUTY 0x11, 0x22, 0x01, 0x02, 0x0C
+
+#define RF_SET_PROPERTY_PA_RAMP_EX 0x11, 0x22, 0x01, 0x04, 0x0E
+
+#define RF_SET_PROPERTY_PA_RAMP_DOWN_DELAY 0x11, 0x22, 0x01, 0x05, 0x23
+
+#define RF_SET_PROPERTY_PA_DIG_PWR_SEQ_CONFIG 0x11, 0x22, 0x01, 0x06, 0x03
+
+#define RF_SET_PROPERTY_PREAMBLE_TX_LENGTH 0x11, 0x10, 0x01, 0x00, 0x10
+
+#define RF_SET_PROPERTY_PREAMBLE_CONFIG_STD_1 0x11, 0x10, 0x01, 0x01, 0x18
+
+#define RF_SET_PROPERTY_PREAMBLE_CONFIG_NSTD 0x11, 0x10, 0x01, 0x02, 0x00
+
+#define RF_SET_PROPERTY_PREAMBLE_CONFIG_STD_2 0x11, 0x10, 0x01, 0x03, 0x0F
+
+#define RF_SET_PROPERTY_PREAMBLE_CONFIG 0x11, 0x10, 0x01, 0x04, 0x21
+
+#define RF_SET_PROPERTY_PREAMBLE_PATTERN 0x11, 0x10, 0x04, 0x05, 0x00, 0x00, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PREAMBLE_POSTAMBLE_CONFIG 0x11, 0x10, 0x01, 0x09, 0x00
+
+#define RF_SET_PROPERTY_PREAMBLE_POSTAMBLE_PATTERN 0x11, 0x10, 0x04, 0x0A, 0x00, 0x00, 0x00, 0x00
+
+#define RF_SET_PROPERTY_SYNC_CONFIG 0x11, 0x11, 0x01, 0x00, 0x01
+
+#define RF_SET_PROPERTY_SYNC_BITS 0x11, 0x11, 0x04, 0x01, 0xD0, 0xE6, 0x00, 0x00
+
+#define RF_SET_PROPERTY_SYNC_CONFIG2 0x11, 0x11, 0x01, 0x05, 0x00
+
+#define RF_SET_PROPERTY_PKT_CRC_CONFIG 0x11, 0x12, 0x01, 0x00, 0x05
+
+#define RF_SET_PROPERTY_PKT_WHT_POLY 0x11, 0x12, 0x02, 0x01, 0x01, 0x08
+
+#define RF_SET_PROPERTY_PKT_WHT_SEED 0x11, 0x12, 0x02, 0x03, 0xFF, 0xFF
+
+#define RF_SET_PROPERTY_PKT_WHT_BIT_NUM 0x11, 0x12, 0x01, 0x05, 0x20
+
+#define RF_SET_PROPERTY_PKT_CONFIG1 0x11, 0x12, 0x01, 0x06, 0x02
+
+#define RF_SET_PROPERTY_PKT_CONFIG2 0x11, 0x12, 0x01, 0x07, 0x00
+
+#define RF_SET_PROPERTY_PKT_LEN 0x11, 0x12, 0x01, 0x08, 0x2A
+
+#define RF_SET_PROPERTY_PKT_LEN_FIELD_SOURCE 0x11, 0x12, 0x01, 0x09, 0x01
+
+#define RF_SET_PROPERTY_PKT_LEN_ADJUST 0x11, 0x12, 0x01, 0x0A, 0xFE
+
+#define RF_SET_PROPERTY_PKT_TX_THRESHOLD 0x11, 0x12, 0x01, 0x0B, 0x30
+
+#define RF_SET_PROPERTY_PKT_RX_THRESHOLD 0x11, 0x12, 0x01, 0x0C, 0x30
+
+#define RF_SET_PROPERTY_PKT_FIELD_1_LENGTH 0x11, 0x12, 0x02, 0x0D, 0x00, 0x01
+
+#define RF_SET_PROPERTY_PKT_FIELD_1_CONFIG 0x11, 0x12, 0x01, 0x0F, 0x02
+
+#define RF_SET_PROPERTY_PKT_FIELD_1_CRC_CONFIG 0x11, 0x12, 0x01, 0x10, 0xA2
+
+#define RF_SET_PROPERTY_PKT_FIELD_2_LENGTH 0x11, 0x12, 0x02, 0x11, 0x00, 0x3F
+
+#define RF_SET_PROPERTY_PKT_FIELD_2_CONFIG 0x11, 0x12, 0x01, 0x13, 0x02
+
+#define RF_SET_PROPERTY_PKT_FIELD_2_CRC_CONFIG 0x11, 0x12, 0x01, 0x14, 0x0A
+
+#define RF_SET_PROPERTY_PKT_FIELD_3_LENGTH 0x11, 0x12, 0x02, 0x15, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_3_CONFIG 0x11, 0x12, 0x01, 0x17, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_3_CRC_CONFIG 0x11, 0x12, 0x01, 0x18, 0x22
+
+#define RF_SET_PROPERTY_PKT_FIELD_4_LENGTH 0x11, 0x12, 0x02, 0x19, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_4_CONFIG 0x11, 0x12, 0x01, 0x1B, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_4_CRC_CONFIG 0x11, 0x12, 0x01, 0x1C, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_5_LENGTH 0x11, 0x12, 0x02, 0x1D, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_5_CONFIG 0x11, 0x12, 0x01, 0x1F, 0x00
+
+#define RF_SET_PROPERTY_PKT_FIELD_5_CRC_CONFIG 0x11, 0x12, 0x01, 0x20, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_1_LENGTH 0x11, 0x12, 0x02, 0x21, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_1_CONFIG 0x11, 0x12, 0x01, 0x23, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_1_CRC_CONFIG 0x11, 0x12, 0x01, 0x24, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_2_LENGTH 0x11, 0x12, 0x02, 0x25, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_2_CONFIG 0x11, 0x12, 0x01, 0x27, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_2_CRC_CONFIG 0x11, 0x12, 0x01, 0x28, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_3_LENGTH 0x11, 0x12, 0x02, 0x29, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_3_CONFIG 0x11, 0x12, 0x01, 0x2B, 0x10
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_3_CRC_CONFIG 0x11, 0x12, 0x01, 0x2C, 0x0A
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_4_LENGTH 0x11, 0x12, 0x02, 0x2D, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_4_CONFIG 0x11, 0x12, 0x01, 0x2F, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_4_CRC_CONFIG 0x11, 0x12, 0x01, 0x30, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_5_LENGTH 0x11, 0x12, 0x02, 0x31, 0x00, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_5_CONFIG 0x11, 0x12, 0x01, 0x33, 0x00
+
+#define RF_SET_PROPERTY_PKT_RX_FIELD_5_CRC_CONFIG 0x11, 0x12, 0x01, 0x34, 0x00
+
+#define RF_SET_PROPERTY_PKT_CRC_SEED 0x11, 0x12, 0x04, 0x36, 0x00, 0x00, 0x00, 0x00
+
+#define RF_SET_PROPERTY_MATCH_VALUE_1 0x11, 0x30, 0x01, 0x00, 0x00
+
+#define RF_SET_PROPERTY_MATCH_MASK_1 0x11, 0x30, 0x01, 0x01, 0x00
+
+#define RF_SET_PROPERTY_MATCH_CTRL_1 0x11, 0x30, 0x01, 0x02, 0x00
+
+#define RF_SET_PROPERTY_MATCH_VALUE_2 0x11, 0x30, 0x01, 0x03, 0x00
+
+#define RF_SET_PROPERTY_MATCH_MASK_2 0x11, 0x30, 0x01, 0x04, 0x00
+
+#define RF_SET_PROPERTY_MATCH_CTRL_2 0x11, 0x30, 0x01, 0x05, 0x00
+
+#define RF_SET_PROPERTY_MATCH_VALUE_3 0x11, 0x30, 0x01, 0x06, 0x00
+
+#define RF_SET_PROPERTY_MATCH_MASK_3 0x11, 0x30, 0x01, 0x07, 0x00
+
+#define RF_SET_PROPERTY_MATCH_CTRL_3 0x11, 0x30, 0x01, 0x08, 0x00
+
+#define RF_SET_PROPERTY_MATCH_VALUE_4 0x11, 0x30, 0x01, 0x09, 0x00
+
+#define RF_SET_PROPERTY_MATCH_MASK_4 0x11, 0x30, 0x01, 0x0A, 0x00
+
+#define RF_SET_PROPERTY_MATCH_CTRL_4 0x11, 0x30, 0x01, 0x0B, 0x00
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_8 0x11, 0x20, 0x01, 0x0F, 0x67
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_7 0x11, 0x20, 0x01, 0x10, 0x60
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_6 0x11, 0x20, 0x01, 0x11, 0x4D
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_5 0x11, 0x20, 0x01, 0x12, 0x36
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_4 0x11, 0x20, 0x01, 0x13, 0x21
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_3 0x11, 0x20, 0x01, 0x14, 0x11
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_2 0x11, 0x20, 0x01, 0x15, 0x08
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_1 0x11, 0x20, 0x01, 0x16, 0x03
+
+#define RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_0 0x11, 0x20, 0x01, 0x17, 0x01
+
+#define RF_SET_PROPERTY_MODEM_MOD_TYPE 0x11, 0x20, 0x01, 0x00, 0x03
+
+#define RF_SET_PROPERTY_MODEM_MAP_CONTROL 0x11, 0x20, 0x01, 0x01, 0x00
+
+#define RF_SET_PROPERTY_MODEM_DSM_CTRL 0x11, 0x20, 0x01, 0x02, 0x07
+
+#define RF_SET_PROPERTY_MODEM_CLKGEN_BAND 0x11, 0x20, 0x01, 0x51, 0x08
+
+#define RF_SET_PROPERTY_SYNTH_PFDCP_CPFF 0x11, 0x23, 0x01, 0x00, 0x39
+
+#define RF_SET_PROPERTY_SYNTH_PFDCP_CPINT 0x11, 0x23, 0x01, 0x01, 0x04
+
+#define RF_SET_PROPERTY_SYNTH_VCO_KV 0x11, 0x23, 0x01, 0x02, 0x0B
+
+#define RF_SET_PROPERTY_SYNTH_LPFILT3 0x11, 0x23, 0x01, 0x03, 0x05
+
+#define RF_SET_PROPERTY_SYNTH_LPFILT2 0x11, 0x23, 0x01, 0x04, 0x04
+
+#define RF_SET_PROPERTY_SYNTH_LPFILT1 0x11, 0x23, 0x01, 0x05, 0x01
+
+#define RF_SET_PROPERTY_SYNTH_LPFILT0 0x11, 0x23, 0x01, 0x06, 0x03
+
+#define RF_SET_PROPERTY_MODEM_DATA_RATE 0x11, 0x20, 0x03, 0x03, 0x32, 0xDC, 0xDC
+
+#define RF_SET_PROPERTY_MODEM_TX_NCO_MODE 0x11, 0x20, 0x04, 0x06, 0x09, 0xC9, 0xC3, 0x80
+
+#define RF_SET_PROPERTY_MODEM_FREQ_DEV 0x11, 0x20, 0x03, 0x0A, 0x00, 0x05, 0xB0
+
+#define RF_SET_PROPERTY_MODEM_TX_RAMP_DELAY 0x11, 0x20, 0x01, 0x18, 0x01
+
+#define RF_SET_PROPERTY_PA_TC 0x11, 0x22, 0x01, 0x03, 0x3D
+
+#define RF_SET_PROPERTY_FREQ_CONTROL_INTE 0x11, 0x40, 0x01, 0x00, 0x3C
+
+#define RF_SET_PROPERTY_FREQ_CONTROL_FRAC 0x11, 0x40, 0x03, 0x01, 0x08, 0x00, 0x00
+
+#define RF_SET_PROPERTY_FREQ_CONTROL_CHANNEL_STEP_SIZE 0x11, 0x40, 0x02, 0x04, 0x22, 0x22
+
+#define RF_SET_PROPERTY_FREQ_CONTROL_W_SIZE 0x11, 0x40, 0x01, 0x06, 0x20
+
+#define RF_SET_PROPERTY_FREQ_CONTROL_VCOCNT_RX_ADJ 0x11, 0x40, 0x01, 0x07, 0xFF
+
+#define RF_SET_PROPERTY_MODEM_MDM_CTRL 0x11, 0x20, 0x01, 0x19, 0x00
+
+#define RF_SET_PROPERTY_MODEM_IF_CONTROL 0x11, 0x20, 0x01, 0x1A, 0x08
+
+#define RF_SET_PROPERTY_MODEM_IF_FREQ 0x11, 0x20, 0x03, 0x1B, 0x03, 0xC0, 0x00
+
+#define RF_SET_PROPERTY_MODEM_DECIMATION_CFG1 0x11, 0x20, 0x01, 0x1E, 0x00
+
+#define RF_SET_PROPERTY_MODEM_DECIMATION_CFG0 0x11, 0x20, 0x01, 0x1F, 0x20
+
+#define RF_SET_PROPERTY_MODEM_BCR_OSR 0x11, 0x20, 0x02, 0x22, 0x00, 0x5A
+
+#define RF_SET_PROPERTY_MODEM_BCR_NCO_OFFSET 0x11, 0x20, 0x03, 0x24, 0x05, 0xB0, 0x5C
+
+#define RF_SET_PROPERTY_MODEM_BCR_GAIN 0x11, 0x20, 0x02, 0x27, 0x05, 0xB0
+
+#define RF_SET_PROPERTY_MODEM_BCR_GEAR 0x11, 0x20, 0x01, 0x29, 0x02
+
+#define RF_SET_PROPERTY_MODEM_BCR_MISC0 0x11, 0x20, 0x01, 0x2B, 0x00
+
+#define RF_SET_PROPERTY_MODEM_BCR_MISC1 0x11, 0x20, 0x01, 0x2A, 0x00
+
+#define RF_SET_PROPERTY_MODEM_AFC_GEAR 0x11, 0x20, 0x01, 0x2C, 0x00
+
+#define RF_SET_PROPERTY_MODEM_AFC_WAIT 0x11, 0x20, 0x01, 0x2D, 0x23
+
+#define RF_SET_PROPERTY_MODEM_AFC_GAIN 0x11, 0x20, 0x02, 0x2E, 0x85, 0xB0
+
+#define RF_SET_PROPERTY_MODEM_AFC_LIMITER 0x11, 0x20, 0x02, 0x30, 0x00, 0xA5
+
+#define RF_SET_PROPERTY_MODEM_AFC_MISC 0x11, 0x20, 0x01, 0x32, 0xA0
+
+#define RF_SET_PROPERTY_MODEM_AGC_CONTROL 0x11, 0x20, 0x01, 0x35, 0xE0
+
+#define RF_SET_PROPERTY_MODEM_AGC_WINDOW_SIZE 0x11, 0x20, 0x01, 0x38, 0x11
+
+#define RF_SET_PROPERTY_MODEM_AGC_RFPD_DECAY 0x11, 0x20, 0x01, 0x39, 0x14
+
+#define RF_SET_PROPERTY_MODEM_AGC_IFPD_DECAY 0x11, 0x20, 0x01, 0x3A, 0x14
+
+#define RF_SET_PROPERTY_MODEM_FSK4_GAIN1 0x11, 0x20, 0x01, 0x3B, 0x80
+
+#define RF_SET_PROPERTY_MODEM_FSK4_GAIN0 0x11, 0x20, 0x01, 0x3C, 0x1A
+
+#define RF_SET_PROPERTY_MODEM_FSK4_TH 0x11, 0x20, 0x02, 0x3D, 0x20, 0x00
+
+#define RF_SET_PROPERTY_MODEM_FSK4_MAP 0x11, 0x20, 0x01, 0x3F, 0x00
+
+#define RF_SET_PROPERTY_MODEM_OOK_PDTC 0x11, 0x20, 0x01, 0x40, 0x28
+
+#define RF_SET_PROPERTY_MODEM_OOK_BLOPK 0x11, 0x20, 0x01, 0x41, 0x0C
+
+#define RF_SET_PROPERTY_MODEM_OOK_CNT1 0x11, 0x20, 0x01, 0x42, 0xA4
+
+#define RF_SET_PROPERTY_MODEM_OOK_MISC 0x11, 0x20, 0x01, 0x43, 0x23
+
+#define RF_SET_PROPERTY_MODEM_RAW_SEARCH2 0x11, 0x20, 0x01, 0x50, 0x84
+
+#define RF_SET_PROPERTY_MODEM_RAW_CONTROL 0x11, 0x20, 0x01, 0x45, 0x03
+
+#define RF_SET_PROPERTY_MODEM_RAW_EYE 0x11, 0x20, 0x02, 0x46, 0x00, 0x73
+
+#define RF_SET_PROPERTY_MODEM_ANT_DIV_MODE 0x11, 0x20, 0x01, 0x48, 0x02
+
+#define RF_SET_PROPERTY_MODEM_ANT_DIV_CONTROL 0x11, 0x20, 0x01, 0x49, 0x04
+
+#define RF_SET_PROPERTY_MODEM_RSSI_JUMP_THRESH 0x11, 0x20, 0x01, 0x4B, 0x06
+
+#define RF_SET_PROPERTY_MODEM_RSSI_CONTROL 0x11, 0x20, 0x01, 0x4C, 0x09
+
+#define RF_SET_PROPERTY_MODEM_RSSI_CONTROL2 0x11, 0x20, 0x01, 0x4D, 0x1C
+
+#define RF_SET_PROPERTY_MODEM_RSSI_COMP 0x11, 0x20, 0x01, 0x4E, 0x40
+
+#define RF_SET_PROPERTY_MODEM_CHFLT_RX1_CHFLT_COE_0 0x11, 0x21, 0x0C, 0x00, 0x5B, 0x47, 0x0F, 0xC0, 0x6D, 0x25, 0xF4, 0xDB, 0xD6, 0xDF, 0xEC, 0xF7
+
+#define RF_SET_PROPERTY_MODEM_CHFLT_RX1_CHFLT_COE_1 0x11, 0x21, 0x06, 0x0C, 0xFE, 0x01, 0x15, 0xF0, 0xFF, 0x03
+
+#define RF_SET_PROPERTY_MODEM_CHFLT_RX2_CHFLT_COE_0 0x11, 0x21, 0x0C, 0x12, 0x5B, 0x47, 0x0F, 0xC0, 0x6D, 0x25, 0xF4, 0xDB, 0xD6, 0xDF, 0xEC, 0xF7
+
+#define RF_SET_PROPERTY_MODEM_CHFLT_RX2_CHFLT_COE_1 0x11, 0x21, 0x06, 0x1E, 0xFE, 0x01, 0x15, 0xF0, 0xFF, 0x03
+
+#define RF_SET_PROPERTY_MODEM_SPIKE_DET 0x11, 0x20, 0x01, 0x54, 0x03
+
+#define RF_SET_PROPERTY_MODEM_DSA_CTRL1 0x11, 0x20, 0x01, 0x5B, 0x40
+
+#define RF_SET_PROPERTY_MODEM_DSA_CTRL2 0x11, 0x20, 0x01, 0x5C, 0x04
+
+#define RF_SET_PROPERTY_MODEM_ONE_SHOT_AFC 0x11, 0x20, 0x01, 0x55, 0x01
+
+#define RF_SET_PROPERTY_MODEM_DSA_QUAL 0x11, 0x20, 0x01, 0x5D, 0x03
+
+#define RF_SET_PROPERTY_MODEM_DSA_RSSI 0x11, 0x20, 0x01, 0x5E, 0x78
+
+#define RF_SET_PROPERTY_MODEM_DECIMATION_CFG2 0x11, 0x20, 0x01, 0x20, 0x00
+
+#define RF_SET_PROPERTY_MODEM_RSSI_MUTE 0x11, 0x20, 0x01, 0x57, 0x00
+
+#define RF_SET_PROPERTY_MODEM_DSA_MISC 0x11, 0x20, 0x01, 0x5F, 0x20
+
+#define RF_SET_PROPERTY_GLOBAL_CLK_CFG 0x11, 0x00, 0x01, 0x01, 0x02
+
+#define RF_SET_PROPERTY_GLOBAL_CONFIG 0x11, 0x00, 0x01, 0x03, 0x20
+
+#define RF_SET_PROPERTY_GLOBAL_WUT_CONFIG 0x11, 0x00, 0x01, 0x04, 0x06
+
+#define RF_SET_PROPERTY_GLOBAL_WUT_M 0x11, 0x00, 0x02, 0x05, 0x00, 0x00
+
+#define RF_SET_PROPERTY_GLOBAL_WUT_R 0x11, 0x00, 0x01, 0x07, 0x60
+
+#define RF_SET_PROPERTY_GLOBAL_WUT_LDC 0x11, 0x00, 0x01, 0x08, 0x00
+
+#define RF_SET_PROPERTY_RX_HOP_CONTROL 0x11, 0x50, 0x01, 0x00, 0x04
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_SIZE 0x11, 0x50, 0x01, 0x01, 0x01
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_0 0x11, 0x50, 0x01, 0x02, 0x00
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_1 0x11, 0x50, 0x01, 0x03, 0x01
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_2 0x11, 0x50, 0x01, 0x04, 0x02
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_3 0x11, 0x50, 0x01, 0x05, 0x03
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_4 0x11, 0x50, 0x01, 0x06, 0x04
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_5 0x11, 0x50, 0x01, 0x07, 0x05
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_6 0x11, 0x50, 0x01, 0x08, 0x06
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_7 0x11, 0x50, 0x01, 0x09, 0x07
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_8 0x11, 0x50, 0x01, 0x0A, 0x08
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_9 0x11, 0x50, 0x01, 0x0B, 0x09
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_10 0x11, 0x50, 0x01, 0x0C, 0x0A
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_11 0x11, 0x50, 0x01, 0x0D, 0x0B
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_12 0x11, 0x50, 0x01, 0x0E, 0x0C
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_13 0x11, 0x50, 0x01, 0x0F, 0x0D
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_14 0x11, 0x50, 0x01, 0x10, 0x0E
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_15 0x11, 0x50, 0x01, 0x11, 0x0F
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_16 0x11, 0x50, 0x01, 0x12, 0x10
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_17 0x11, 0x50, 0x01, 0x13, 0x11
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_18 0x11, 0x50, 0x01, 0x14, 0x12
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_19 0x11, 0x50, 0x01, 0x15, 0x13
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_20 0x11, 0x50, 0x01, 0x16, 0x14
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_21 0x11, 0x50, 0x01, 0x17, 0x15
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_22 0x11, 0x50, 0x01, 0x18, 0x16
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_23 0x11, 0x50, 0x01, 0x19, 0x17
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_24 0x11, 0x50, 0x01, 0x1A, 0x18
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_25 0x11, 0x50, 0x01, 0x1B, 0x19
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_26 0x11, 0x50, 0x01, 0x1C, 0x1A
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_27 0x11, 0x50, 0x01, 0x1D, 0x1B
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_28 0x11, 0x50, 0x01, 0x1E, 0x1C
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_29 0x11, 0x50, 0x01, 0x1F, 0x1D
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_30 0x11, 0x50, 0x01, 0x20, 0x1E
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_31 0x11, 0x50, 0x01, 0x21, 0x1F
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_32 0x11, 0x50, 0x01, 0x22, 0x20
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_33 0x11, 0x50, 0x01, 0x23, 0x21
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_34 0x11, 0x50, 0x01, 0x24, 0x22
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_35 0x11, 0x50, 0x01, 0x25, 0x23
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_36 0x11, 0x50, 0x01, 0x26, 0x24
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_37 0x11, 0x50, 0x01, 0x27, 0x25
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_38 0x11, 0x50, 0x01, 0x28, 0x26
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_39 0x11, 0x50, 0x01, 0x29, 0x27
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_40 0x11, 0x50, 0x01, 0x2A, 0x28
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_41 0x11, 0x50, 0x01, 0x2B, 0x29
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_42 0x11, 0x50, 0x01, 0x2C, 0x2A
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_43 0x11, 0x50, 0x01, 0x2D, 0x2B
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_44 0x11, 0x50, 0x01, 0x2E, 0x2C
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_45 0x11, 0x50, 0x01, 0x2F, 0x2D
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_46 0x11, 0x50, 0x01, 0x30, 0x2E
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_47 0x11, 0x50, 0x01, 0x31, 0x2F
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_48 0x11, 0x50, 0x01, 0x32, 0x30
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_49 0x11, 0x50, 0x01, 0x33, 0x31
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_50 0x11, 0x50, 0x01, 0x34, 0x32
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_51 0x11, 0x50, 0x01, 0x35, 0x33
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_52 0x11, 0x50, 0x01, 0x36, 0x34
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_53 0x11, 0x50, 0x01, 0x37, 0x35
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_54 0x11, 0x50, 0x01, 0x38, 0x36
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_55 0x11, 0x50, 0x01, 0x39, 0x37
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_56 0x11, 0x50, 0x01, 0x3A, 0x38
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_57 0x11, 0x50, 0x01, 0x3B, 0x39
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_58 0x11, 0x50, 0x01, 0x3C, 0x3A
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_59 0x11, 0x50, 0x01, 0x3D, 0x3B
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_60 0x11, 0x50, 0x01, 0x3E, 0x3C
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_61 0x11, 0x50, 0x01, 0x3F, 0x3D
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_62 0x11, 0x50, 0x01, 0x40, 0x3E
+
+#define RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_63 0x11, 0x50, 0x01, 0x41, 0x3F
+
+
 
 #ifndef FIRMWARE_LOAD_COMPILE
-#define RADIO_CONFIGURATION_DATA_ARRAY { \
-        SI446X_PATCH_CMDS, \
-        0x07, RF_POWER_UP, \
-        0x08, RF_GPIO_PIN_CFG, \
-        0x06, RF_GLOBAL_XO_TUNE_2, \
-        0x05, RF_GLOBAL_CONFIG_1, \
-        0x06, RF_INT_CTL_ENABLE_2, \
-        0x08, RF_FRR_CTL_A_MODE_4, \
-        0x0D, RF_PREAMBLE_TX_LENGTH_9, \
-        0x0A, RF_SYNC_CONFIG_6, \
-        0x0B, RF_PKT_CRC_CONFIG_7, \
-        0x10, RF_PKT_LEN_12, \
-        0x10, RF_PKT_FIELD_2_CRC_CONFIG_12, \
-        0x10, RF_PKT_FIELD_5_CRC_CONFIG_12, \
-        0x0D, RF_PKT_RX_FIELD_3_CRC_CONFIG_9, \
-        0x08, RF_PKT_CRC_SEED_31_24_4, \
-        0x10, RF_MODEM_MOD_TYPE_12, \
-        0x05, RF_MODEM_FREQ_DEV_0_1, \
-        0x10, RF_MODEM_TX_RAMP_DELAY_12, \
-        0x10, RF_MODEM_BCR_NCO_OFFSET_2_12, \
-        0x07, RF_MODEM_AFC_LIMITER_1_3, \
-        0x05, RF_MODEM_AGC_CONTROL_1, \
-        0x10, RF_MODEM_AGC_WINDOW_SIZE_12, \
-        0x0C, RF_MODEM_RAW_CONTROL_8, \
-        0x07, RF_MODEM_RSSI_CONTROL_3, \
-        0x06, RF_MODEM_RAW_SEARCH2_2, \
-        0x06, RF_MODEM_SPIKE_DET_2, \
-        0x05, RF_MODEM_RSSI_MUTE_1, \
-        0x09, RF_MODEM_DSA_CTRL1_5, \
-        0x10, RF_MODEM_CHFLT_RX1_CHFLT_COE13_7_0_12, \
-        0x10, RF_MODEM_CHFLT_RX1_CHFLT_COE1_7_0_12, \
-        0x10, RF_MODEM_CHFLT_RX2_CHFLT_COE7_7_0_12, \
-        0x08, RF_PA_MODE_4, \
-        0x0B, RF_SYNTH_PFDCP_CPFF_7, \
-        0x10, RF_MATCH_VALUE_1_12, \
-        0x0C, RF_FREQ_CONTROL_INTE_8, \
-        0x00 \
- }
-#else
+
+#define RADIO_CONFIGURATION_DATA_ARRAY {\
+  7, RF_POWER_UP, \
+  8, RF_GPIO_PIN_CFG, \
+  5, RF_SET_PROPERTY_GLOBAL_XO_TUNE, \
+  5, RF_SET_PROPERTY_FRR_CTL_A_MODE, \
+  5, RF_SET_PROPERTY_FRR_CTL_B_MODE, \
+  5, RF_SET_PROPERTY_FRR_CTL_C_MODE, \
+  5, RF_SET_PROPERTY_FRR_CTL_D_MODE, \
+  5, RF_SET_PROPERTY_INT_CTL_ENABLE, \
+  5, RF_SET_PROPERTY_INT_CTL_PH_ENABLE, \
+  5, RF_SET_PROPERTY_INT_CTL_MODEM_ENABLE, \
+  5, RF_SET_PROPERTY_INT_CTL_CHIP_ENABLE, \
+  5, RF_SET_PROPERTY_PA_MODE, \
+  5, RF_SET_PROPERTY_PA_PWR_LVL, \
+  5, RF_SET_PROPERTY_PA_BIAS_CLKDUTY, \
+  5, RF_SET_PROPERTY_PA_RAMP_EX, \
+  5, RF_SET_PROPERTY_PA_RAMP_DOWN_DELAY, \
+  5, RF_SET_PROPERTY_PA_DIG_PWR_SEQ_CONFIG, \
+  5, RF_SET_PROPERTY_PREAMBLE_TX_LENGTH, \
+  5, RF_SET_PROPERTY_PREAMBLE_CONFIG_STD_1, \
+  5, RF_SET_PROPERTY_PREAMBLE_CONFIG_NSTD, \
+  5, RF_SET_PROPERTY_PREAMBLE_CONFIG_STD_2, \
+  5, RF_SET_PROPERTY_PREAMBLE_CONFIG, \
+  8, RF_SET_PROPERTY_PREAMBLE_PATTERN, \
+  5, RF_SET_PROPERTY_PREAMBLE_POSTAMBLE_CONFIG, \
+  8, RF_SET_PROPERTY_PREAMBLE_POSTAMBLE_PATTERN, \
+  5, RF_SET_PROPERTY_SYNC_CONFIG, \
+  8, RF_SET_PROPERTY_SYNC_BITS, \
+  5, RF_SET_PROPERTY_SYNC_CONFIG2, \
+  5, RF_SET_PROPERTY_PKT_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_WHT_POLY, \
+  6, RF_SET_PROPERTY_PKT_WHT_SEED, \
+  5, RF_SET_PROPERTY_PKT_WHT_BIT_NUM, \
+  5, RF_SET_PROPERTY_PKT_CONFIG1, \
+  5, RF_SET_PROPERTY_PKT_CONFIG2, \
+  5, RF_SET_PROPERTY_PKT_LEN, \
+  5, RF_SET_PROPERTY_PKT_LEN_FIELD_SOURCE, \
+  5, RF_SET_PROPERTY_PKT_LEN_ADJUST, \
+  5, RF_SET_PROPERTY_PKT_TX_THRESHOLD, \
+  5, RF_SET_PROPERTY_PKT_RX_THRESHOLD, \
+  6, RF_SET_PROPERTY_PKT_FIELD_1_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_FIELD_1_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_FIELD_1_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_FIELD_2_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_FIELD_2_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_FIELD_2_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_FIELD_3_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_FIELD_3_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_FIELD_3_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_FIELD_4_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_FIELD_4_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_FIELD_4_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_FIELD_5_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_FIELD_5_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_FIELD_5_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_RX_FIELD_1_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_1_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_1_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_RX_FIELD_2_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_2_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_2_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_RX_FIELD_3_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_3_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_3_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_RX_FIELD_4_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_4_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_4_CRC_CONFIG, \
+  6, RF_SET_PROPERTY_PKT_RX_FIELD_5_LENGTH, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_5_CONFIG, \
+  5, RF_SET_PROPERTY_PKT_RX_FIELD_5_CRC_CONFIG, \
+  8, RF_SET_PROPERTY_PKT_CRC_SEED, \
+  5, RF_SET_PROPERTY_MATCH_VALUE_1, \
+  5, RF_SET_PROPERTY_MATCH_MASK_1, \
+  5, RF_SET_PROPERTY_MATCH_CTRL_1, \
+  5, RF_SET_PROPERTY_MATCH_VALUE_2, \
+  5, RF_SET_PROPERTY_MATCH_MASK_2, \
+  5, RF_SET_PROPERTY_MATCH_CTRL_2, \
+  5, RF_SET_PROPERTY_MATCH_VALUE_3, \
+  5, RF_SET_PROPERTY_MATCH_MASK_3, \
+  5, RF_SET_PROPERTY_MATCH_CTRL_3, \
+  5, RF_SET_PROPERTY_MATCH_VALUE_4, \
+  5, RF_SET_PROPERTY_MATCH_MASK_4, \
+  5, RF_SET_PROPERTY_MATCH_CTRL_4, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_8, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_7, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_6, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_5, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_4, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_3, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_2, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_1, \
+  5, RF_SET_PROPERTY_MODEM_TX_FILTER_COEFF_0, \
+  5, RF_SET_PROPERTY_MODEM_MOD_TYPE, \
+  5, RF_SET_PROPERTY_MODEM_MAP_CONTROL, \
+  5, RF_SET_PROPERTY_MODEM_DSM_CTRL, \
+  5, RF_SET_PROPERTY_MODEM_CLKGEN_BAND, \
+  5, RF_SET_PROPERTY_SYNTH_PFDCP_CPFF, \
+  5, RF_SET_PROPERTY_SYNTH_PFDCP_CPINT, \
+  5, RF_SET_PROPERTY_SYNTH_VCO_KV, \
+  5, RF_SET_PROPERTY_SYNTH_LPFILT3, \
+  5, RF_SET_PROPERTY_SYNTH_LPFILT2, \
+  5, RF_SET_PROPERTY_SYNTH_LPFILT1, \
+  5, RF_SET_PROPERTY_SYNTH_LPFILT0, \
+  7, RF_SET_PROPERTY_MODEM_DATA_RATE, \
+  8, RF_SET_PROPERTY_MODEM_TX_NCO_MODE, \
+  7, RF_SET_PROPERTY_MODEM_FREQ_DEV, \
+  5, RF_SET_PROPERTY_MODEM_TX_RAMP_DELAY, \
+  5, RF_SET_PROPERTY_PA_TC, \
+  5, RF_SET_PROPERTY_FREQ_CONTROL_INTE, \
+  7, RF_SET_PROPERTY_FREQ_CONTROL_FRAC, \
+  6, RF_SET_PROPERTY_FREQ_CONTROL_CHANNEL_STEP_SIZE, \
+  5, RF_SET_PROPERTY_FREQ_CONTROL_W_SIZE, \
+  5, RF_SET_PROPERTY_FREQ_CONTROL_VCOCNT_RX_ADJ, \
+  5, RF_SET_PROPERTY_MODEM_MDM_CTRL, \
+  5, RF_SET_PROPERTY_MODEM_IF_CONTROL, \
+  7, RF_SET_PROPERTY_MODEM_IF_FREQ, \
+  5, RF_SET_PROPERTY_MODEM_DECIMATION_CFG1, \
+  5, RF_SET_PROPERTY_MODEM_DECIMATION_CFG0, \
+  6, RF_SET_PROPERTY_MODEM_BCR_OSR, \
+  7, RF_SET_PROPERTY_MODEM_BCR_NCO_OFFSET, \
+  6, RF_SET_PROPERTY_MODEM_BCR_GAIN, \
+  5, RF_SET_PROPERTY_MODEM_BCR_GEAR, \
+  5, RF_SET_PROPERTY_MODEM_BCR_MISC0, \
+  5, RF_SET_PROPERTY_MODEM_BCR_MISC1, \
+  5, RF_SET_PROPERTY_MODEM_AFC_GEAR, \
+  5, RF_SET_PROPERTY_MODEM_AFC_WAIT, \
+  6, RF_SET_PROPERTY_MODEM_AFC_GAIN, \
+  6, RF_SET_PROPERTY_MODEM_AFC_LIMITER, \
+  5, RF_SET_PROPERTY_MODEM_AFC_MISC, \
+  5, RF_SET_PROPERTY_MODEM_AGC_CONTROL, \
+  5, RF_SET_PROPERTY_MODEM_AGC_WINDOW_SIZE, \
+  5, RF_SET_PROPERTY_MODEM_AGC_RFPD_DECAY, \
+  5, RF_SET_PROPERTY_MODEM_AGC_IFPD_DECAY, \
+  5, RF_SET_PROPERTY_MODEM_FSK4_GAIN1, \
+  5, RF_SET_PROPERTY_MODEM_FSK4_GAIN0, \
+  6, RF_SET_PROPERTY_MODEM_FSK4_TH, \
+  5, RF_SET_PROPERTY_MODEM_FSK4_MAP, \
+  5, RF_SET_PROPERTY_MODEM_OOK_PDTC, \
+  5, RF_SET_PROPERTY_MODEM_OOK_BLOPK, \
+  5, RF_SET_PROPERTY_MODEM_OOK_CNT1, \
+  5, RF_SET_PROPERTY_MODEM_OOK_MISC, \
+  5, RF_SET_PROPERTY_MODEM_RAW_SEARCH2, \
+  5, RF_SET_PROPERTY_MODEM_RAW_CONTROL, \
+  6, RF_SET_PROPERTY_MODEM_RAW_EYE, \
+  5, RF_SET_PROPERTY_MODEM_ANT_DIV_MODE, \
+  5, RF_SET_PROPERTY_MODEM_ANT_DIV_CONTROL, \
+  5, RF_SET_PROPERTY_MODEM_RSSI_JUMP_THRESH, \
+  5, RF_SET_PROPERTY_MODEM_RSSI_CONTROL, \
+  5, RF_SET_PROPERTY_MODEM_RSSI_CONTROL2, \
+  5, RF_SET_PROPERTY_MODEM_RSSI_COMP, \
+  16, RF_SET_PROPERTY_MODEM_CHFLT_RX1_CHFLT_COE_0, \
+  10, RF_SET_PROPERTY_MODEM_CHFLT_RX1_CHFLT_COE_1, \
+  16, RF_SET_PROPERTY_MODEM_CHFLT_RX2_CHFLT_COE_0, \
+  10, RF_SET_PROPERTY_MODEM_CHFLT_RX2_CHFLT_COE_1, \
+  5, RF_SET_PROPERTY_MODEM_SPIKE_DET, \
+  5, RF_SET_PROPERTY_MODEM_DSA_CTRL1, \
+  5, RF_SET_PROPERTY_MODEM_DSA_CTRL2, \
+  5, RF_SET_PROPERTY_MODEM_ONE_SHOT_AFC, \
+  5, RF_SET_PROPERTY_MODEM_DSA_QUAL, \
+  5, RF_SET_PROPERTY_MODEM_DSA_RSSI, \
+  5, RF_SET_PROPERTY_MODEM_DECIMATION_CFG2, \
+  5, RF_SET_PROPERTY_MODEM_RSSI_MUTE, \
+  5, RF_SET_PROPERTY_MODEM_DSA_MISC, \
+  5, RF_SET_PROPERTY_GLOBAL_CLK_CFG, \
+  5, RF_SET_PROPERTY_GLOBAL_CONFIG, \
+  5, RF_SET_PROPERTY_GLOBAL_WUT_CONFIG, \
+  6, RF_SET_PROPERTY_GLOBAL_WUT_M, \
+  5, RF_SET_PROPERTY_GLOBAL_WUT_R, \
+  5, RF_SET_PROPERTY_GLOBAL_WUT_LDC, \
+  5, RF_SET_PROPERTY_RX_HOP_CONTROL, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_SIZE, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_0, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_1, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_2, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_3, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_4, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_5, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_6, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_7, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_8, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_9, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_10, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_11, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_12, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_13, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_14, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_15, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_16, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_17, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_18, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_19, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_20, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_21, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_22, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_23, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_24, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_25, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_26, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_27, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_28, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_29, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_30, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_31, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_32, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_33, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_34, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_35, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_36, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_37, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_38, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_39, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_40, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_41, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_42, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_43, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_44, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_45, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_46, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_47, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_48, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_49, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_50, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_51, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_52, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_53, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_54, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_55, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_56, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_57, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_58, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_59, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_60, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_61, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_62, \
+  5, RF_SET_PROPERTY_RX_HOP_TABLE_ENTRY_63, \
+  0 \
+  }
+
+#else // ! FIRMWARE_LOAD_COMPILE
+
 #define RADIO_CONFIGURATION_DATA_ARRAY { 0 }
-#endif
 
-// DEFAULT VALUES FOR CONFIGURATION PARAMETERS
-#define RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ_DEFAULT                     30000000L
-#define RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER_DEFAULT                    0x00
-#define RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH_DEFAULT               0x10
-#define RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP_DEFAULT        0x01
-#define RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET_DEFAULT       0x1000
+#endif // FIRMWARE_LOAD_COMPILE
 
-#define RADIO_CONFIGURATION_DATA_RADIO_PATCH_INCLUDED                      0x00
-#define RADIO_CONFIGURATION_DATA_RADIO_PATCH_SIZE                          0x00
-#define RADIO_CONFIGURATION_DATA_RADIO_PATCH                               {  }
 
-#ifndef RADIO_CONFIGURATION_DATA_ARRAY
-#error "This property must be defined!"
-#endif
+#define RADIO_CONFIGURATION_DATA_BASE_FREQUENCY 915000000
+#define RADIO_CONFIGURATION_DATA_BIT_ORDER FALSE
+#define RADIO_CONFIGURATION_DATA_CENTER_FREQUENCY 915000000
+#define RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER 0
+#define RADIO_CONFIGURATION_DATA_CHANNEL_SPACING 200000
+#define RADIO_CONFIGURATION_DATA_CHECK_CRC_0 FALSE
+#define RADIO_CONFIGURATION_DATA_CHECK_CRC_1 TRUE
+#define RADIO_CONFIGURATION_DATA_CHECK_CRC_2 FALSE
+#define RADIO_CONFIGURATION_DATA_CHECK_CRC_3 FALSE
+#define RADIO_CONFIGURATION_DATA_CHECK_CRC_4 FALSE
+#define RADIO_CONFIGURATION_DATA_CHIP_HW_INTERRUPT 0
+#define RADIO_CONFIGURATION_DATA_CRC_PADDING FALSE
+#define RADIO_CONFIGURATION_DATA_CRC_START TRUE
+#define RADIO_CONFIGURATION_DATA_CRYSTAL_CAP_BANK 77
+#define RADIO_CONFIGURATION_DATA_CRYSTAL_FREQUENCY 30000000
+#define RADIO_CONFIGURATION_DATA_CRYSTAL_TOLERANCE_RX 20
+#define RADIO_CONFIGURATION_DATA_CRYSTAL_TOLERANCE_TX 20
+#define RADIO_CONFIGURATION_DATA_CRYSTAL_USE_EXTERNAL_SOURCE FALSE
+#define RADIO_CONFIGURATION_DATA_DRIVE_STRENGTH 0
+#define RADIO_CONFIGURATION_DATA_ENABLE_CHIP_HW_INTERRUPT FALSE
+#define RADIO_CONFIGURATION_DATA_ENABLE_CRC_0 TRUE
+#define RADIO_CONFIGURATION_DATA_ENABLE_CRC_1 TRUE
+#define RADIO_CONFIGURATION_DATA_ENABLE_CRC_2 TRUE
+#define RADIO_CONFIGURATION_DATA_ENABLE_CRC_3 FALSE
+#define RADIO_CONFIGURATION_DATA_ENABLE_CRC_4 FALSE
+#define RADIO_CONFIGURATION_DATA_ENABLE_MODEM_HW_INTERRUPT FALSE
+#define RADIO_CONFIGURATION_DATA_ENABLE_PACKET_HANDELR_HW_INTERRUPT TRUE
+#define RADIO_CONFIGURATION_DATA_FLD_CRC_BITORDER 0
+#define RADIO_CONFIGURATION_DATA_FLD_CRC_ENDIAN 1
+#define RADIO_CONFIGURATION_DATA_FLD_INVERT_CRC FALSE
+#define RADIO_CONFIGURATION_DATA_FLD_MANCHESTER_PATTERN 0
+#define RADIO_CONFIGURATION_DATA_FLD_MODEM_4GFSK_MODE FALSE
+#define RADIO_CONFIGURATION_DATA_FRR_CTL_A_MODE 2
+#define RADIO_CONFIGURATION_DATA_FRR_CTL_B_MODE 3
+#define RADIO_CONFIGURATION_DATA_FRR_CTL_C_MODE 9
+#define RADIO_CONFIGURATION_DATA_FRR_CTL_D_MODE 10
+#define RADIO_CONFIGURATION_DATA_GPIO0 22
+#define RADIO_CONFIGURATION_DATA_GPIO0_PULLUP FALSE
+#define RADIO_CONFIGURATION_DATA_GPIO1 23
+#define RADIO_CONFIGURATION_DATA_GPIO1_PULLUP FALSE
+#define RADIO_CONFIGURATION_DATA_GPIO2 33
+#define RADIO_CONFIGURATION_DATA_GPIO2_PULLUP FALSE
+#define RADIO_CONFIGURATION_DATA_GPIO3 34
+#define RADIO_CONFIGURATION_DATA_GPIO3_PULLUP FALSE
+#define RADIO_CONFIGURATION_DATA_HOP_ENABLE 0
+#define RADIO_CONFIGURATION_DATA_HOP_PREAMBLE_TIMEOUT 20
+#define RADIO_CONFIGURATION_DATA_HOP_RSSI_TIMEOUT 10
+#define RADIO_CONFIGURATION_DATA_HOP_TABLE
+#define RADIO_CONFIGURATION_DATA_HOP_TYPE MANUAL_FREQUENCY_HOP
+#define RADIO_CONFIGURATION_DATA_LDC_RX_TIME_ADJUST 0
+#define RADIO_CONFIGURATION_DATA_LDC_SLEEP_TIME_ADJUST 0
+#define RADIO_CONFIGURATION_DATA_LDC_STEP_SIZE_ADJUST 0
+#define RADIO_CONFIGURATION_DATA_LENGTH_SUB 0
+#define RADIO_CONFIGURATION_DATA_MATCH_BYTES 0
+#define RADIO_CONFIGURATION_DATA_MATCH_LOGIC_1 AND
+#define RADIO_CONFIGURATION_DATA_MATCH_LOGIC_2 AND
+#define RADIO_CONFIGURATION_DATA_MATCH_LOGIC_3 AND
+#define RADIO_CONFIGURATION_DATA_MATCH_MASK_0 FF
+#define RADIO_CONFIGURATION_DATA_MATCH_MASK_1 FF
+#define RADIO_CONFIGURATION_DATA_MATCH_MASK_2 FF
+#define RADIO_CONFIGURATION_DATA_MATCH_MASK_3 FF
+#define RADIO_CONFIGURATION_DATA_MATCH_OFFSET_0 0
+#define RADIO_CONFIGURATION_DATA_MATCH_OFFSET_1 1
+#define RADIO_CONFIGURATION_DATA_MATCH_OFFSET_2 1
+#define RADIO_CONFIGURATION_DATA_MATCH_OFFSET_3 1
+#define RADIO_CONFIGURATION_DATA_MATCH_POLARITY_0 MATCH
+#define RADIO_CONFIGURATION_DATA_MATCH_POLARITY_1 MATCH
+#define RADIO_CONFIGURATION_DATA_MATCH_POLARITY_2 MATCH
+#define RADIO_CONFIGURATION_DATA_MATCH_POLARITY_3 MATCH
+#define RADIO_CONFIGURATION_DATA_MATCH_VALUE_0 00
+#define RADIO_CONFIGURATION_DATA_MATCH_VALUE_1 00
+#define RADIO_CONFIGURATION_DATA_MATCH_VALUE_2 00
+#define RADIO_CONFIGURATION_DATA_MATCH_VALUE_3 00
+#define RADIO_CONFIGURATION_DATA_MODEM_HW_INTERRUPT 0
+#define RADIO_CONFIGURATION_DATA_NIRQ 0
+#define RADIO_CONFIGURATION_DATA_NIRQ_PULLUP FALSE
+#define RADIO_CONFIGURATION_DATA_PACKET_HANDELR_HW_INTERRUPT 60
+#define RADIO_CONFIGURATION_DATA_PH_FIELD_SPLIT FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_ALLOW_BIT_ERR 0
+#define RADIO_CONFIGURATION_DATA_PKT_CRC_POLY 5
+#define RADIO_CONFIGURATION_DATA_PKT_CRC_SEED 0
+#define RADIO_CONFIGURATION_DATA_PKT_DATA_WHITENING_SEED FF FF
+#define RADIO_CONFIGURATION_DATA_PKT_ENABLE_PREAMBLE TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_4GFSK_0 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_4GFSK_1 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_4GFSK_2 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_4GFSK_3 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_4GFSK_4 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_CONTAINING_LENGTH 1
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_0 1
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_1 63
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_2 0
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_3 0
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_4 0
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_MANCHESTER_0 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_MANCHESTER_1 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_MANCHESTER_2 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_MANCHESTER_3 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_MANCHESTER_4 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_WHITEN_0 TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_WHITEN_1 TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_WHITEN_2 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_WHITEN_3 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_FIELD_WHITEN_4 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_LENGTH_ADJUST -2
+#define RADIO_CONFIGURATION_DATA_PKT_LENGTH_SIZE 1
+#define RADIO_CONFIGURATION_DATA_PKT_LEN_ADD_TO_RX_FIFO TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_LEN_IN_MSB TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_NUMBER_OF_FIELDS 2
+#define RADIO_CONFIGURATION_DATA_PKT_NUMBER_OF_RX_FIELDS 2
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_EXTENDED_TIMEOUT 0
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_MANCHESTER_CONSTANT FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_MANCHESTER_ENABLED FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_NONE_STANDARD 00 00 00 00
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_PATTERN 1
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_PATTERN_LENGTH 0
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_RX_BIT_ERROR 0
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_RX_THRESHOLD 24
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_TIMEOUT 15
+#define RADIO_CONFIGURATION_DATA_PKT_PREAMBLE_TX_LENGTH 16
+#define RADIO_CONFIGURATION_DATA_PKT_RESET_DATAWHITENING FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_4GFSK_0 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_4GFSK_1 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_4GFSK_2 TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_4GFSK_3 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_4GFSK_4 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_LENGTH_0 0
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_LENGTH_1 0
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_LENGTH_2 0
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_LENGTH_3 0
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_LENGTH_4 0
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_MANCHESTER_0 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_MANCHESTER_1 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_MANCHESTER_2 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_MANCHESTER_3 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_MANCHESTER_4 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_WHITEN_0 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_WHITEN_1 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_WHITEN_2 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_WHITEN_3 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_FIELD_WHITEN_4 FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_RX_THRESHOLD 48
+#define RADIO_CONFIGURATION_DATA_PKT_SKIP_SYNCWORD FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_SKIP_SYNC_TIMEOUT FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_SYNC_4GFSK FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_SYNC_LENGTH 2
+#define RADIO_CONFIGURATION_DATA_PKT_SYNC_MANCHESTER FALSE
+#define RADIO_CONFIGURATION_DATA_PKT_SYNC_WORD 0B 67
+#define RADIO_CONFIGURATION_DATA_PKT_SYNC_WORD_API D0 E6
+#define RADIO_CONFIGURATION_DATA_PKT_TX_THRESHOLD 48
+#define RADIO_CONFIGURATION_DATA_PKT_VARIABLE_LENGTH_FIELD 2
+#define RADIO_CONFIGURATION_DATA_PKT_VARIABLE_PACKET_LENGTH_ENABLE TRUE
+#define RADIO_CONFIGURATION_DATA_PKT_WHITENING_POLY 264
+#define RADIO_CONFIGURATION_DATA_PN_DIRECTION 1
+#define RADIO_CONFIGURATION_DATA_POWER_ENABLE_RAMP_CONTROL FALSE
+#define RADIO_CONFIGURATION_DATA_POWER_PA_BIAS 12
+#define RADIO_CONFIGURATION_DATA_POWER_PA_MODE 0
+#define RADIO_CONFIGURATION_DATA_POWER_PA_POWERLEVEL 26
+#define RADIO_CONFIGURATION_DATA_POWER_RAMPING_TIME 14
+#define RADIO_CONFIGURATION_DATA_POWER_RAMP_HV 29
+#define RADIO_CONFIGURATION_DATA_POWER_REGULATOR_VOLTAGE 15
+#define RADIO_CONFIGURATION_DATA_RFPARAM_4GFSK_MAP 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_ADAPTIVE_CHFILL FALSE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_BANDWIDTH_TIME 50
+#define RADIO_CONFIGURATION_DATA_RFPARAM_BER_MODE FALSE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_CHECKTHRESHOLDATLATCH FALSE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_DATA_RATE 166667
+#define RADIO_CONFIGURATION_DATA_RFPARAM_DEVIATION 41667
+#define RADIO_CONFIGURATION_DATA_RFPARAM_DEVIATION_ERROR_NEGATIVE 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_DEVIATION_ERROR_POSITIVE 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_ENABLEANTENNADIVERSITY TRUE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_ENABLEIQCALIBRATION FALSE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_ENABLE_HIGH_PERFORMANCE_CHANNEL_FILLTER TRUE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_ENABLE_MANUAL_RXBANDWIDTH FALSE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_ENABLE_PLL_AFC FALSE
+#define RADIO_CONFIGURATION_DATA_RFPARAM_IF_MODE 2
+#define RADIO_CONFIGURATION_DATA_RFPARAM_MODULATION_MODE PACKET
+#define RADIO_CONFIGURATION_DATA_RFPARAM_MODULATION_TYPE GFSK2
+#define RADIO_CONFIGURATION_DATA_RFPARAM_OSR_TUNE 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_PREAMBLE_PATTERN 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RSSI_AVERAGE 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RSSI_JUMP_THRESHOLD 12
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RSSI_LATCH 2
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RSSI_THRESHOLD 255
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RXBANDWIDTH 150000
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RXDATARATEERROR 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RX_CURRENT 0
+#define RADIO_CONFIGURATION_DATA_RFPARAM_RX_PERFORMANCE 0
+#define RADIO_CONFIGURATION_DATA_RX_CHECK_CRC_0 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_CHECK_CRC_1 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_CHECK_CRC_2 TRUE
+#define RADIO_CONFIGURATION_DATA_RX_CHECK_CRC_3 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_CHECK_CRC_4 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_CRC_START FALSE
+#define RADIO_CONFIGURATION_DATA_RX_ENABLE_CRC_0 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_ENABLE_CRC_1 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_ENABLE_CRC_2 TRUE
+#define RADIO_CONFIGURATION_DATA_RX_ENABLE_CRC_3 FALSE
+#define RADIO_CONFIGURATION_DATA_RX_ENABLE_CRC_4 FALSE
+#define RADIO_CONFIGURATION_DATA_SDO 0
+#define RADIO_CONFIGURATION_DATA_SDO_PULLUP FALSE
+#define RADIO_CONFIGURATION_DATA_SELECTED_CHIP si4463~revC2A
+#define RADIO_CONFIGURATION_DATA_SW_CRC_CTRL FALSE
+#define RADIO_CONFIGURATION_DATA_SW_WHT_CTRL FALSE
+#define RADIO_CONFIGURATION_DATA_SYNC_ERROR_ONLY_BEGIN 0
+#define RADIO_CONFIGURATION_DATA_SYSCLOCK_32KHZ_CLOCK 0
+#define RADIO_CONFIGURATION_DATA_SYSCLOCK_CLOCK_OUTPUT 0
+#define RADIO_CONFIGURATION_DATA_SYSCLOCK_ENABLE_DIVIDED_CLOCK_OUTPUT FALSE
+#define RADIO_CONFIGURATION_DATA_TRANSMIT_CRC_0 TRUE
+#define RADIO_CONFIGURATION_DATA_TRANSMIT_CRC_1 FALSE
+#define RADIO_CONFIGURATION_DATA_TRANSMIT_CRC_2 TRUE
+#define RADIO_CONFIGURATION_DATA_TRANSMIT_CRC_3 FALSE
+#define RADIO_CONFIGURATION_DATA_TRANSMIT_CRC_4 FALSE
+#define RADIO_CONFIGURATION_DATA_WHT_BIT_NUM 0
 
-#ifndef RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ
-#define RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ          RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ_DEFAULT 
-#endif
 
-#ifndef RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER
-#define RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER         RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER_DEFAULT 
-#endif
+#define RADIO_CONFIG_DATA_FIELD1_LENGTH RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_0
+#define RADIO_CONFIG_DATA_FIELD2_LENGTH RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_1
+#define RADIO_CONFIG_DATA_FIELD3_LENGTH RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_2
+#define RADIO_CONFIG_DATA_FIELD4_LENGTH RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_3
+#define RADIO_CONFIG_DATA_FIELD5_LENGTH RADIO_CONFIGURATION_DATA_PKT_FIELD_LENGTH_4
 
-#ifndef RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH
-#define RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH    RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH_DEFAULT 
-#endif
-
-#ifndef RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP
-#define RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP   RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP_DEFAULT 
-#endif
-
-#ifndef RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET
-#define RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET  RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET_DEFAULT 
-#endif
 
 #define RADIO_CONFIGURATION_DATA { \
-                            Radio_Configuration_Data_Array,                            \
-                            RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER,                   \
-                            RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH,              \
-                            RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP,       \
-                            RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET       \
-                            }
+                                   Radio_Configuration_Data_Array,                       \
+                                   RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER,              \
+                                   RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH,         \
+                                   RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP,  \
+                                   RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET, \
+                                   RADIO_CONFIGURATION_DATA_VARIABLEPACKETSTATE,         \
+                                   RADIO_CONFIGURATION_DATA_CUSTOM_PAYLOAD               \
+                                  }
 
-#endif /* RADIO_CONFIG_H_ */
+#endif // __SLAB_RADIO_CONFIG_WDS__
+
+
+//        _  _
+//       | )/ )         Wireless
+//    \\ |//,' __       Application
+//    (")(_)-"()))=-    Software
+//       (\\            Platform
