@@ -203,6 +203,8 @@ static void ezradioInit(task_t cb)
 	// Most of this is from ezradio_plugin_manager/ezradioInit()
   uint16_t wDelay;
 
+  if (cb != NULL)
+    int_callback = cb;
   /* Initialize radio GPIOs and SPI port */
   ezradio_hal_GpioInit( GPIO_EZRadio_INT_IRQHandler, true );
   ezradio_hal_SpiInit();
@@ -228,8 +230,6 @@ static void ezradioInit(task_t cb)
   /* Read ITs, clear pending ones */
   ezradio_get_int_status(0u, 0u, 0u, NULL);
 
-  if (cb != NULL)
-	  int_callback = cb;
 }
 
 static void ezradioPowerUp(void)
